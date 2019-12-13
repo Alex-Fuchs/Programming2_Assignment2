@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
  * @version 14.11.19
  * @author ------
  */
-final class Shell {
+public final class Shell {
 
     private Shell() { }
 
@@ -29,8 +29,7 @@ final class Shell {
      *                          weitergeleitet und das Programm wird beendet.
      */
     public static void main(String[] args) throws IOException {
-        BufferedReader stdin
-        = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
         execute(stdin);
     }
 
@@ -50,53 +49,56 @@ final class Shell {
      */
     private static void execute(BufferedReader stdin) throws IOException {
         boolean quit = false;
-        final String prompt = "reversi> ";
+        final String prompt = "othello> ";
         while (!quit) {
             System.out.print(prompt);
             String input = stdin.readLine();
-            if (input == null || input.trim().equals("")) {
-                ShellToBoard.printError("Please enter a command!");
-                continue;
+            if (input == null) {
+                break;
             }
             String[] tokens = input.trim().split("\\s+");
             tokens[0] = tokens[0].toLowerCase();
 
-            switch (tokens[0].charAt(0)) {
-            case 'n':
-                ShellToBoard.newBoard();
-                break;
-            case 'h':
-                ShellToBoard.help();
-                break;
-            case 'q':
-                quit = true;
-                break;
-            case 'm':
-                final int parameterNumberMove = 2;
-                if (tokens.length > parameterNumberMove) {
-                    String[] parametersForMove = {tokens[1], tokens[2]};
-                    ShellToBoard.move(parametersForMove);
-                } else {
-                    ShellToBoard.printError("Not enough parameters!");
+            if (!tokens[0].equals("")) {
+                switch (tokens[0].charAt(0)) {
+                case 'n':
+                    ShellToBoard.newBoard();
+                    break;
+                case 'h':
+                    ShellToBoard.help();
+                    break;
+                case 'q':
+                    quit = true;
+                    break;
+                case 'm':
+                    final int parameterNumberMove = 2;
+                    if (tokens.length > parameterNumberMove) {
+                        String[] parametersForMove = {tokens[1], tokens[2]};
+                        ShellToBoard.move(parametersForMove);
+                    } else {
+                        ShellToBoard.printError("Not enough parameters!");
+                    }
+                    break;
+                case 'l':
+                    final int parameterNumberLevel = 1;
+                    if (tokens.length > parameterNumberLevel) {
+                        ShellToBoard.setLevel(tokens[1]);
+                    } else {
+                        ShellToBoard.printError("No parameter!");
+                    }
+                    break;
+                case 's':
+                    ShellToBoard.switchPlayerOrder();
+                    break;
+                case 'p':
+                    ShellToBoard.print();
+                    break;
+                default:
+                    ShellToBoard.printError("Type help for overview!");
+                    break;
                 }
-                break;
-            case 'l':
-                final int parameterNumberLevel = 1;
-                if (tokens.length > parameterNumberLevel) {
-                    ShellToBoard.setLevel(tokens[1]);
-                } else {
-                    ShellToBoard.printError("No parameter!");
-                }
-                break;
-            case 's':
-                ShellToBoard.switchPlayerOrder();
-                break;
-            case 'p':
-                ShellToBoard.print();
-                break;
-            default:
-                ShellToBoard.printError("Type help for overview!");
-                break;
+            } else {
+                ShellToBoard.printError("Please enter a command!");
             }
         }
     }
