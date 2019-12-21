@@ -1,6 +1,7 @@
 package de.uni_passau.fim.prog2.io;
 
 import de.uni_passau.fim.prog2.reversi.Board;
+import de.uni_passau.fim.prog2.reversi.Player;
 import de.uni_passau.fim.prog2.reversi.Reversi;
 
 /**
@@ -9,13 +10,13 @@ import de.uni_passau.fim.prog2.reversi.Reversi;
  * verbindet. Parameter werden auf Richtigkeit geprüft. Befehle werden an das
  * {@code Board} Objekt weitergeleitet.
  *
- * @version 14.11.19
+ * @version 21.12.19
  * @author -----
  */
 final class ShellToBoard {
 
     /**
-     * {@code Board} Objekt des Programms
+     * Stellt das Objekt des Spiels dar.
      */
     private static Board board = new Reversi();
 
@@ -27,22 +28,39 @@ final class ShellToBoard {
      * @see         Board
      */
     static void newBoard() {
-        board = new Reversi(board.getFirstPlayer(), )
+        board = new Reversi(board.getFirstPlayer(), );
     }
 
     static void move(String[] tokens) {
+        Integer row = checkParameter(tokens[0], Board.SIZE);
+        Integer col = checkParameter(tokens[1], Board.SIZE);
+        if (row != null && col != null) {
 
-    }
-
-    static void setLevel(String token) {
-        Integer parameter = checkParameter(token, );
-        if (parameter != null) {
-            board
         }
     }
 
-    static void switchPlayerOrder() {
+    /**
+     * Ändert das Level des momentanen Spiels. Das Level muss ein positiver
+     * Integer sein, der kleiner gleich {@code Reversi.MAX_LEVEL} ist.
+     *
+     * @param token     Entspricht dem neuen Level.
+     */
+    static void setLevel(String token) {
+        Integer parameter = checkParameter(token, Reversi.MAX_LEVEL);
+        if (parameter != null) {
+            board.setLevel(parameter);
+        }
+    }
 
+    /**
+     * Erstellt ein neues Spiel und ändert die Zugreihenfolge.
+     */
+    static void switchPlayerOrder() {
+        if (board.getFirstPlayer() == Player.HUMAN) {
+            board = new Reversi(Player.HUMAN, );
+        } else {
+            board = new Reversi(Player.MACHINE, );
+        }
     }
 
     /**
@@ -78,7 +96,7 @@ final class ShellToBoard {
     /**
      * Gibt eine spezielle Fehlernachricht in der Konsole aus.
      *
-     * @param message       {@code String} der Fehlernachricht
+     * @param message       Entspricht einer kurzen Beschreibung des Fehlers.
      */
     static void printError(String message) {
         final String errorMessage = "Error!";
@@ -88,15 +106,17 @@ final class ShellToBoard {
     /**
      * Prüft, ob der Parameter zu {@code Integer} konvertiert werden kann und
      * ob er den jew Anforderungen genügt. Die Parameter von {@code move}
-     * müssen kleiner gleich Board.SIZE sein. Der Parameter von
-     * {@code setLevel} muss kleiner gleich dem stärksten Level sein. In jedem
-     * Fall muss der Parameter > 0 sein.
+     * müssen kleiner gleich {@code Board.SIZE} sein. Der Parameter von
+     * {@code setLevel} muss kleiner gleich {@code Reversi.MAX_LEVEL} sein.
+     * In jedem Fall muss der Parameter größer 0 sein.
      *
-     * @param token             {@code String} des Parameters
-     * @param maxValue          {@code int} der maximalen Größe des Parameters
-     * @return                  null, falls der {@code String} den
-     *                          Anforderungen nicht genügt.
-     *                          Integer andernfalls.
+     * @param token             Entspricht dem übergebenen Parameter.
+     * @param maxValue          Die max Größe des {@code Integer} unterscheidet
+     *                          sich je nach obigen Methoden.
+     * @return                  Gibt null zurück, falls der {@code String}
+     *                          keinen positiven {@code Integer} kleiner gleich
+     *                          {@code maxValue} entspricht.
+     *                          Gibt andernfalls den {@code Integer} zurück.
      */
     private static Integer checkParameter(String token, int maxValue) {
         Integer parameter;

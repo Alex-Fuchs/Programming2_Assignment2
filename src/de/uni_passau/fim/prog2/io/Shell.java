@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * {@code Shell} ist eine Utilityklasse, die den Input in der Shell und
+ * {@code Shell} ist eine Utilityklasse, die den Input in der Konsole und
  * somit alle Kommandos des Nutzers verarbeitet und diese darauf an
  * {@code ShellToBoard} weiterleitet. Dort werden auch, falls vorhanden, die
  * Parameter geprüft. Es können beliebig viele Parameter angehängt werden,
@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
  * statt den Kommandos der Form "c" auch ein Wort mit den Anfangsbuchstaben c
  * geschrieben werden.
  *
- * @version 14.11.19
+ * @version 21.12.19
  * @author ------
  */
 public final class Shell {
@@ -23,13 +23,15 @@ public final class Shell {
     /**
      * Startet das Programm.
      *
-     * @param   args            Startübergabe des Programms
+     * @param   args            Entspricht der Startübergabe des Programms.
      * @throws  IOException     Falls I/O Probleme bei dem Benutzer bestehen,
      *                          wird die {@code IOException} zur JVM
      *                          weitergeleitet und das Programm wird beendet.
+     * @see                     #execute(BufferedReader)
      */
     public static void main(String[] args) throws IOException {
-        BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader stdin
+                = new BufferedReader(new InputStreamReader(System.in));
         execute(stdin);
     }
 
@@ -40,8 +42,7 @@ public final class Shell {
      * Kommandos "c" werden auch Wörter mit dem Anfangsbuchstaben c
      * akzeptiert.
      *
-     * @param   stdin           {@code BufferedReader} aus {@code main},
-     *                          wird zum Lesen der Befehle verwendet.
+     * @param   stdin           Wird zum Lesen der Kommandos benötigt.
      * @throws  IOException     Falls I/O Probleme bei dem Benutzer bestehen,
      *                          wird eine {@code IOException} zu
      *                          {@code main} geleitet.
