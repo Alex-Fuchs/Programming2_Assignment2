@@ -35,7 +35,7 @@ final class ShellToBoard {
         Integer row = checkParameter(tokens[0], Board.SIZE);
         Integer col = checkParameter(tokens[1], Board.SIZE);
         if (row != null && col != null) {
-
+            board.move(row, col);
         }
     }
 
