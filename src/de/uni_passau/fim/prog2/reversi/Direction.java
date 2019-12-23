@@ -1,5 +1,12 @@
 package de.uni_passau.fim.prog2.reversi;
 
+/**
+ * Stellt alle Himmelsrichtungen in einem Reversi Spielbrett dar.
+ * Wird benötigt, um die Legalität eines Zuges zu prüfen.
+ *
+ * @version 21.12.19
+ * @author -----
+ */
 public enum Direction {
 
     NORTH {
@@ -91,7 +98,17 @@ public enum Direction {
         }
     };
 
+    /**
+     * Gibt die durch die Himmelrichtung definierte x-Wert Veränderung zurück.
+     *
+     * @return      Entspricht den Schritt in x-Richtung.
+     */
     abstract int getX();
 
+    /**
+     * Gibt die durch die Himmelrichtung definierte y-Wert Veränderung zurück.
+     *
+     * @return      Entspricht den Schritt in y-Richtung.
+     */
     abstract int getY();
 }
