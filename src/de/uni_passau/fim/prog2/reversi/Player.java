@@ -1,8 +1,8 @@
 package de.uni_passau.fim.prog2.reversi;
 
 /**
- * Reversi kann als menschlicher Spieler vs Bot gespielt werden, wobei dieses
- * Enum die Spieler und deren Steine darstellt.
+ * {@code Reversi} kann als Mensch vs Bot gespielt werden,
+ * wobei diese Klasse die Spieler und deren Steine darstellt.
  *
  * @version 21.12.19
  * @author -----

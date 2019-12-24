@@ -3,7 +3,7 @@ package de.uni_passau.fim.prog2.reversi;
 /**
  * {@code IllegalMoveException} ist eine definierte {@code RuntimeException},
  * die geworfen wird, falls versucht wird, einen Zug auszuführen, obwohl das
- * Spiel vorbei ist oder ein Spieler nicht an der Reihe ist.
+ * Spiel vorbei ist oder ein {@code Player} nicht an der Reihe ist.
  *
  * @version 21.12.19
  * @author -----

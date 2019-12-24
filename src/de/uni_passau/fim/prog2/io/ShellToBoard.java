@@ -31,17 +31,18 @@ final class ShellToBoard {
         board = new Reversi(board.getFirstPlayer(), );
     }
 
+
     static void move(String[] tokens) {
         Integer row = checkParameter(tokens[0], Board.SIZE);
         Integer col = checkParameter(tokens[1], Board.SIZE);
         if (row != null && col != null) {
-            board.move(row, col);
+            board = board.move(row, col);
         }
     }
 
     /**
      * Ändert das Level des momentanen Spiels. Das Level muss ein positiver
-     * Integer sein, der kleiner gleich {@code Reversi.MAX_LEVEL} ist.
+     * {@code Integer} sein, der kleiner gleich {@code Reversi.MAX_LEVEL} ist.
      *
      * @param token     Entspricht dem neuen Level.
      */

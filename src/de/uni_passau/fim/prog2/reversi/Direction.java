@@ -1,8 +1,9 @@
 package de.uni_passau.fim.prog2.reversi;
 
 /**
- * Stellt alle Himmelsrichtungen in einem Reversi Spielbrett dar.
- * Wird benötigt, um die Legalität eines Zuges zu prüfen.
+ * Stellt alle Himmelsrichtungen in einem {@code Reversi} Spielbrett dar.
+ * Wird benötigt, um die Legalität eines Zuges zu prüfen und den Score zu
+ * berechnen.
  *
  * @version 21.12.19
  * @author -----

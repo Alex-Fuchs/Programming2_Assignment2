@@ -1,12 +1,13 @@
 package de.uni_passau.fim.prog2.reversi;
 
 /**
- * Reversi oder auch Othello genannt ist ein strategisches Brettspiel. Das
- * Spielbrett besteht aus {@code Board.SIZE} x {@code Board.SIZE} Feldern.
- * Auf diese Felder legen die Spieler ihre Steine. Das Spiel sieht einen
- * menschlichen Spieler vs einen Bot vor. Die Züge des Bots werden aufwändig
- * ermittelt. Das Spiel implementiert das interface {@code Board}, mit dessen
- * Funktionalität ein Spiel gespielt werden kann.
+ * Die Klasse {@code Reversi} implementiert ein strategisches Brettspiel
+ * gennant Reversi bzw Othello. Das Spielbrett besteht aus
+ * {@code Board.SIZE} x {@code Board.SIZE} Feldern. Auf diese Felder werden
+ * Steine gelegt. Das Spiel sieht einen Menschen vs einen
+ * Bot vor. Die Züge des Bots werden aufwändig ermittelt. Das Spiel
+ * implementiert {@code Board}, mit dessen Funktionalität das Spiel gespielt
+ * werden kann.
  *
  * @version 21.12.19
  * @author -----
@@ -39,9 +40,8 @@ public class Reversi implements Board {
     private Player nextPlayer;
 
     /**
-     * Entspricht true, falls sowohl der menschliche Spieler als auch die
-     * Maschine nicht mehr ziehen konnten, was äquivalent dazu ist, dass das
-     * Spiel vorbei ist.
+     * Entspricht true, falls sowohl der Mensch als auch die Maschine nicht
+     * mehr ziehen konnten, was äquivalent dazu ist, dass das Spiel vorbei ist.
      */
     private boolean gameOver;
 
@@ -59,10 +59,9 @@ public class Reversi implements Board {
      * Erzeugt ein neues Spiel, wobei {@code firstPlayer} und {@code level}
      * individuell gesetzt werden kann.
      *
-     * @param firstPlayer                   Entspricht dem Spieler, der das
-     *                                      Spiel eröffnet.
+     * @param firstPlayer                   Entspricht dem Eröffner des Spiels.
      * @param level                         Entspricht dem Level der Maschine.
-     * @throws IllegalArgumentException     Wird geworfen, falls das level
+     * @throws IllegalArgumentException     Wird geworfen, falls {@code level}
      *                                      nicht positiv oder zu groß ist
      *                                      oder {@code firstPlayer} nicht
      *                                      definiert ist.
@@ -82,7 +81,7 @@ public class Reversi implements Board {
     }
 
     /**
-     * Gibt den Spieler zurück, der das Spiel eröffnet hat.
+     * Gibt den {@code Player} zurück, der das Spiel eröffnet hat.
      *
      * @return      Entspricht dem Eröffner.
      */
@@ -92,9 +91,9 @@ public class Reversi implements Board {
     }
 
     /**
-     * Gibt den Spieler zurück, der nun an der Reihe ist.
+     * Gibt den {@code Player} zurück, der nun an der Reihe ist.
      *
-     * @return      Entspricht dem nun ziehenden Spieler.
+     * @return      Entspricht dem nun ziehenden {@code Player}.
      */
     @Override
     public Player next() {
@@ -165,11 +164,11 @@ public class Reversi implements Board {
     }
 
     /**
-     * Setzt das Level auf einen neuen Wert, der positiv und kleiner gleich
-     * dem maximalen Level {@code MAX_LEVEL} ist.
+     * Setzt die Schwierigkeitsstufe auf einen neuen Wert, der positiv und
+     * kleiner gleich dem maximalen Level {@code MAX_LEVEL} ist.
      *
-     * @param level     Entspricht dem neuen Level und muss positiv und
-     *                  kleiner gleich {@code MAX_LEVEL} sein
+     * @param level     Entspricht dem neuen Level der Maschine und muss
+     *                  positiv und kleiner gleich {@code MAX_LEVEL} sein.
      */
     @Override
     public void setLevel(int level) {
@@ -197,9 +196,9 @@ public class Reversi implements Board {
      * dem Spielfeld hat. Dies ist nur möglich, falls das Spiel bereits vorbei
      * ist. Ein Unentschieden ist ebenso möglich.
      *
-     * @return                          Entspricht dem Spieler, der gewonnen
-     *                                  hat. Falls null zurückgegeben wird,
-     *                                  ist das Spiel unentschieden.
+     * @return                          Entspricht dem Gewinner des Spiels.
+     *                                  Falls null zurückgegeben wird, ist das
+     *                                  Spiel unentschieden.
      * @throws IllegalStateException    Wird geworfen, falls das Spiel noch
      *                                  nicht vorbei ist.
      * @see                             #gameOver()
@@ -251,20 +250,18 @@ public class Reversi implements Board {
      * @return      Entspricht der Anzahl der leeren Felder.
      * @see         #getNumberOfTiles(Player)
      */
-    public int getNumberOfEmptyTiles() {
+    int getNumberOfEmptyTiles() {
         return getNumberOfTiles(null);
     }
 
     /**
      * Gibt den Inhalt des Felds zurück, wobei null für ein leeres Feld steht.
      *
-     * @param row                       Entspricht der Zeile auf der der Stein
-     *                                  gelegt werden soll.
-     * @param col                       Entspricht der Spalte auf der der
-     *                                  Stein gelegt werden soll.
-     * @return                          Gibt den Spieler des Felds zurück.
-     *                                  Falls null zurückgegeben wird,
-     *                                  ist das Feld leer.
+     * @param row                       Entspricht der Zeile des Spielfelds.
+     * @param col                       Entspricht der Spalte des Spielfelds.
+     * @return                          Gibt den Spieler des Steines auf dem
+     *                                  Feld zurück. Falls null zurückgegeben
+     *                                  wird, ist das Feld leer.
      * @throws IllegalArgumentException Wird geworfen, falls {@code row} oder
      *                                  {@code col} nicht positiv oder zu groß
      *                                  sind.
@@ -310,9 +307,9 @@ public class Reversi implements Board {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < game.length; i++) {
-            for (int u = 0; u < game[i]. length; u++) {
-                switch (game[i][u]) {
+        for (int i = 1; i <= game.length; i++) {
+            for (int u = 1; u <= game[i]. length; u++) {
+                switch (getSlot(i, u)) {
                 case HUMAN:
                     stringBuilder.append('X');
                     break;
@@ -360,8 +357,8 @@ public class Reversi implements Board {
      * @param player            Entspricht dem Spieler, für den geprüft werden
      *                          soll, ob der Zug legal ist.
      * @return                  Falls der Zug legal ist, wird die für den Zug
-     *                          beste Himmelsrichtung zurückgegeben.
-     *                          Andernfalls wird null zurückgegeben.
+     *                          beste Himmelsrichtung zurückgegeben,
+     *                          andernfalls wird null zurückgegeben.
      * @throws AssertionError   Falls {@code row} oder {@code col} nicht
      *                          positiv oder zu groß sind, oder der Spieler
      *                          undefiniert ist, kann der Zug nicht
@@ -386,9 +383,11 @@ public class Reversi implements Board {
 
                 while (!endLoop && rowToCheck <= Board.SIZE
                         && colToCheck <= Board.SIZE) {
-                    if (getSlot(rowToCheck, colToCheck) == player.inverse()) {
+                    Player playerOfSlot = getSlot(rowToCheck, colToCheck);
+
+                    if (playerOfSlot == player.inverse()) {
                         counter++;
-                    } else if (getSlot(rowToCheck, colToCheck) == player) {
+                    } else if (playerOfSlot == player) {
                         if (counter > 0) {
                             isLegalOperation = true;
                         }
@@ -396,7 +395,6 @@ public class Reversi implements Board {
                     } else {
                         endLoop = true;
                     }
-
                     rowToCheck += direction.getY();
                     colToCheck += direction.getX();
                 }
@@ -413,7 +411,9 @@ public class Reversi implements Board {
     /**
      * Führt einen bereits vorher auf Legalität geprüften Zug auf einem Klon
      * aus, wobei der Zug für {@code nextPlayer} ausgeführt wird. Außerdem
-     * wird der nächste Spieler berechnet.
+     * wird der nächste Spieler berechnet. Falls vorher der Zug nicht auf
+     * Legalität geprüft wurde, können nicht mögliche Spielzustände
+     * eintreten!
      *
      * @param row               Entspricht der Zeile auf der der Stein gelegt
      *                          werden soll.
@@ -437,21 +437,19 @@ public class Reversi implements Board {
 
         boolean endLoop = false;
         Reversi copy = clone();
-        copy.setNextPlayer();
-        row += direction.getY();
-        col += direction.getX();
-
         while (!endLoop && row <= Board.SIZE && col <= Board.SIZE) {
-            if (getSlot(row, col) == nextPlayer.inverse()) {
+            Player playerOfSlot = getSlot(row, col);
+
+            if (playerOfSlot == null || playerOfSlot == nextPlayer.inverse()) {
                 copy.game[row - 1][col - 1] = nextPlayer;
             } else {
-                copy.game[row - 1][col - 1] = nextPlayer.inverse();
                 endLoop = true;
             }
-
             row += direction.getY();
             col += direction.getX();
         }
+
+        copy.setNextPlayer();
         return copy;
     }
 
@@ -489,14 +487,13 @@ public class Reversi implements Board {
      * @throws AssertionError   Falls der Spieler undefiniert ist, kann nicht
      *                          geprüft werden, ob dieser ziehen kann.
      */
-    public int numberOfLegalMoves(Player player) {
+    int numberOfLegalMoves(Player player) {
         assert player != null;
 
         int counter = 0;
         for (int i = 1; i <= game.length; i++) {
             for (int u = 1; u <= game[i].length; u++) {
                 Direction direction = checkLegalityOfMove(i, u, player);
-
                 if (direction != null) {
                     counter++;
                 }
@@ -509,16 +506,16 @@ public class Reversi implements Board {
      * Gibt die Anzahl der Steine des {@code player} auf dem Spielfeld zurück.
      *
      * @param player        Entspricht einen der Spieler oder kann auch null
-     *                      sein, was für keinen Stein steht.
+     *                      sein, was für leere Felder steht.
      * @return              Gibt Anzahl der Steine auf dem Spielfeld zurück
      *                      oder falls {@code player} null ist, auf wie vielen
      *                      Feldern kein Stein liegt.
      */
     private int getNumberOfTiles(Player player) {
         int counter = 0;
-        for (int i = 0; i < game.length; i++) {
-            for (int u = 0; u < game[i]. length; u++) {
-                if (game[i][u] == player) {
+        for (int i = 1; i <= game.length; i++) {
+            for (int u = 1; u <= game[i]. length; u++) {
+                if (getSlot(i, u) == player) {
                     counter++;
                 }
             }
