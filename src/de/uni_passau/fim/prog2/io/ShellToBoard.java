@@ -23,49 +23,63 @@ final class ShellToBoard {
     private ShellToBoard() { }
 
     /**
-     * Setzt das {@code Board} Objekt vollständig zurück.
+     * Setzt das {@code Board} Objekt vollständig zurück, wobei der Eröffner
+     * und das Level gleich bleiben.
      *
-     * @see         Board
+     * @see     Board#getFirstPlayer()
+     * @see     Reversi
      */
     static void newBoard() {
-        board = new Reversi(board.getFirstPlayer(), );
+        board = new Reversi(board.getFirstPlayer(), (Reversi) board);
     }
 
 
     static void move(String[] tokens) {
-        Integer row = checkParameter(tokens[0], Board.SIZE);
-        Integer col = checkParameter(tokens[1], Board.SIZE);
-        if (row != null && col != null) {
-            board = board.move(row, col);
+        Integer[] parameter = checkParameters(tokens);
+        if (parameter != null) {
+            if (parameter[0] <= Board.SIZE && parameter[1] <= Board.SIZE) {
+                board = board.move(parameter[0], parameter[1]);
+            } else {
+                printError("At least one Parameter is too big!");
+            }
         }
     }
 
     /**
      * Ändert das Level des momentanen Spiels. Das Level muss ein positiver
-     * {@code Integer} sein, der kleiner gleich {@code Reversi.MAX_LEVEL} ist.
+     * {@code Integer} sein.
      *
-     * @param token     Entspricht dem neuen Level.
+     * @param tokens     Entspricht der Liste der Parameter, hier ist jedoch
+     *                   nur ein Parameter, das Level, notwendig.
+     * @see              #checkParameters(String[])
+     * @see              Board#setLevel(int)
      */
-    static void setLevel(String token) {
-        Integer parameter = checkParameter(token, Reversi.MAX_LEVEL);
+    static void setLevel(String[] tokens) {
+        Integer[] parameter = checkParameters(tokens);
         if (parameter != null) {
-            board.setLevel(parameter);
+            board.setLevel(parameter[0]);
         }
     }
 
     /**
-     * Erstellt ein neues Spiel und ändert die Zugreihenfolge.
+     * Erstellt ein neues Spiel und tauscht den Eröffner, wobei das
+     * alte Level erhalten bleibt.
+     *
+     * @see     Board#getFirstPlayer()
+     * @see     Reversi
      */
     static void switchPlayerOrder() {
         if (board.getFirstPlayer() == Player.HUMAN) {
-            board = new Reversi(Player.HUMAN, );
+            board = new Reversi(Player.MACHINE, (Reversi) board);
         } else {
-            board = new Reversi(Player.MACHINE, );
+            board = new Reversi(Player.HUMAN, (Reversi) board);
         }
     }
 
     /**
      * Gibt die kanonische Darstellung von {@code board} zurück.
+     *
+     * @see     Board#toString()
      */
     static void print() {
         System.out.println(board);
@@ -105,32 +119,29 @@ final class ShellToBoard {
     }
 
     /**
-     * Prüft, ob der Parameter zu {@code Integer} konvertiert werden kann und
-     * ob er den jew Anforderungen genügt. Die Parameter von {@code move}
-     * müssen kleiner gleich {@code Board.SIZE} sein. Der Parameter von
-     * {@code setLevel} muss kleiner gleich {@code Reversi.MAX_LEVEL} sein.
-     * In jedem Fall muss der Parameter größer 0 sein.
+     * Prüft, ob alle nötigen Parameter zu {@code Integer} konvertiert werden
+     * können und positiv sind.
      *
-     * @param token             Entspricht dem übergebenen Parameter.
-     * @param maxValue          Die max Größe des {@code Integer} unterscheidet
-     *                          sich je nach obigen Methoden.
-     * @return                  Gibt null zurück, falls der {@code String}
-     *                          keinen positiven {@code Integer} kleiner gleich
-     *                          {@code maxValue} entspricht.
-     *                          Gibt andernfalls den {@code Integer} zurück.
+     * @param tokens        Entspricht den übergebenen Parametern.
+     * @return              Gibt null zurück, falls einer der Parameter nicht
+     *                      den Anforderungen entspricht.
+     *                      Gibt andernfalls die konvertierten Parameter
+     *                      zurück.
      */
-    private static Integer checkParameter(String token, int maxValue) {
-        Integer parameter;
-        try {
-            parameter = Integer.parseInt(token);
-            if (parameter <= maxValue && parameter > 0) {
-                return parameter;
-            } else {
-                printError("A parameter does not fit the conditions");
+    private static Integer[] checkParameters(String[] tokens) {
+        Integer[] parameters = new Integer[tokens.length];
+        for (int i = 0; i < parameters.length; i++) {
+            try {
+                parameters[i] = Integer.parseInt(tokens[i]);
+                if (parameters[i] <= 0) {
+                    printError("At least one parameter is not positive!");
+                    return null;
+                }
+            } catch (NumberFormatException e) {
+                printError("At least one parameter is no integer or too big!");
+                return null;
             }
-        } catch (NumberFormatException e) {
-            printError("A parameter is no integer or too big");
         }
-        return null;
+        return parameters;
     }
 }

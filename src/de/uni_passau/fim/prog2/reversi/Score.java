@@ -13,7 +13,7 @@ package de.uni_passau.fim.prog2.reversi;
 public class Score {
 
     /**
-     * Entspricht das zu bewertende SpielObjekt.
+     * Entspricht das zu bewertende Spielobjekt.
      */
     private Reversi reversi;
 
@@ -40,18 +40,20 @@ public class Score {
      *
      * @param player    Entspricht dem Spieler, für den bewertet wird.
      * @return          Gibt den Score des Spielbretts zurück.
-     * @throws
      * @see             #calculateFieldScore(Player)
-     * @see             #calculateMobilityScore(Player)
-     * @see             #calculatePotencialScore(Player)
+     * @see             #calculateMobilityScore(Player, int)
+     * @see             #calculatePotencialScore(Player, int)
      */
     double calculateScore(Player player) {
         assert player != null;
 
         double score = 0;
+        int numberOfTakenFields = reversi.getNumberOfHumanTiles()
+                                + reversi.getNumberOfMachineTiles();
+
         score += calculateFieldScore(player);
-        score += calculateMobilityScore(player);
-        score += calculatePotencialScore(player);
+        score += calculateMobilityScore(player, numberOfTakenFields);
+        score += calculatePotencialScore(player, numberOfTakenFields);
         return score;
     }
 
@@ -64,7 +66,6 @@ public class Score {
      *
      * @param player        Entspricht dem Spieler, für den bewertet wird.
      * @return              Gibt den Score der Felder zurück.
-     * @throws
      */
     private double calculateFieldScore(Player player) {
         assert Board.SIZE == 8 && player != null;
@@ -84,27 +85,45 @@ public class Score {
     }
 
     /**
-     * Brechnet den Score der möglichen Züge von {@code player}, wobei auch
-     * die möglichen Züge des Gegners mit einbezogen werden. Der Score wird
-     * mit einer bestimmten Formel berechnet und wird im Laufe des Spiels
-     * immer unwichtiger.
+     * Berechnet den Score der Mobilität, der momentan möglichen Züge von
+     * {@code player}, wobei auch die möglichen Züge des Gegners mit einbezogen
+     * werden. Der Score wird mit einer bestimmten Formel berechnet und wird
+     * im Laufe des Spiels immer unwichtiger.
      *
-     * @param player        Entspricht dem Spieler, für den bewertet wird.
-     * @return              Gibt den Score der möglichen Züge zurück.
-     * @throws 
+     * @param player                Entspricht dem Spieler, für den bewertet
+     *                              wird.
+     * @param numberOfTakenFields   Entspricht der Anzahl an besetzten Feldern,
+     *                              die aufgrund Laufzeit ausgelagert wurde.
+     * @return                      Gibt den Score der möglichen Züge zurück.
      */
-    private double calculateMobilityScore(Player player) {
+    private double calculateMobilityScore(Player player,
+                                          int numberOfTakenFields) {
         assert player != null;
 
         int numberOfFields = Board.SIZE * Board.SIZE;
         int playerScore = reversi.numberOfLegalMoves(player);
         int enemyScore = reversi.numberOfLegalMoves(player.inverse());
-        return (numberOfFields / (2.0 * reversi.getNumberOfEmptyTiles()))
-                * (2.5 * playerScore - 3.0 * enemyScore);
+        return (numberOfFields / (double) numberOfTakenFields)
+                * (3.0 * playerScore - 4.0 * enemyScore);
 
     }
 
-    private double calculatePotencialScore(Player player) {
+    /**
+     * Berechnet den Score des Potenzials, der in Zukunft möglichen Züge von
+     * {@code player}, wobei auch die zukünftigen, möglichen Züge des Gegners
+     * mit einbezogen werden. Der Score wird mit einer bestimmten Formel
+     * berechnet und wird im Laufe des Spiels immer unwichtiger.
+     *
+     * @param player                Entspricht dem Spieler, für den bewertet
+     *                              wird.
+     * @param numberOfTakenFields   Entspricht der Anzahl an besetzten Feldern,
+     *                              die aufgrund Laufzeit ausgelagert wurde.
+     * @return                      Gibt den Score der zukünftig möglichen
+     *                              Züge zurück.
+     * @see                         #countWrappingFields(int, int)
+     */
+    private double calculatePotencialScore(Player player,
+                                           int numberOfTakenFields) {
         assert player != null;
 
         int numberOfFields = Board.SIZE * Board.SIZE;
@@ -119,10 +138,18 @@ public class Score {
                 }
             }
         }
-        return (numberOfFields / (2.0 * reversi.getNumberOfEmptyTiles()))
+        return (numberOfFields / (2.0 * numberOfTakenFields))
                 * (2.5 * playerScore - 3.0 * enemyScore);
     }
 
+    /**
+     * Zählt die Anzahl der leeren Felder, die an das Feld in der Zeile
+     * {@code row} und in der Spalte {@code col} anliegen.
+     *
+     * @param row       Entspricht der Zeile des Feldes.
+     * @param col       Entspricht der Spalte des Feldes.
+     * @return          Gibt die Anzahl der anliegenden Felder zurück.
+     */
     private int countWrappingFields(int row, int col) {
         assert row > 0 && row <= Board.SIZE && col > 0 && col <= Board.SIZE;
 
@@ -137,6 +164,14 @@ public class Score {
         return counter;
     }
 
+    /**
+     * Gibt eine 8 x 8 Matrix zurück, wobei in jedem Feld der Score des
+     * Spielbrettfeldes gespeichert wird. Falls das Spielfeld nicht 8 x 8
+     * groß ist, muss eine neue Bewertungsmatrix gebildet werden.
+     *
+     * @return      Entspricht der Bewertungsmatrix, die für die
+     *              Felderbewertung benötigt wird.
+     */
     private static int[][] getFieldScores() {
         int[][] result = new int[8][8];
 
