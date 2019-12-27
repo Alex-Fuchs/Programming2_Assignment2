@@ -10,7 +10,7 @@ package de.uni_passau.fim.prog2.reversi;
  * @version 21.12.19
  * @author -----
  */
-public class Score {
+class Score {
 
     /**
      * Entspricht das zu bewertende Spielobjekt.
@@ -18,65 +18,70 @@ public class Score {
     private Reversi reversi;
 
     /**
+     * Entspricht den zu bewertenden Spieler, der somit durch seinen Zug
+     * diese Spielsituation geschaffen hat.
+     */
+    private Player playerToAssess;
+
+    /**
      * Entspricht der Bewertung der einzelnen Felder des Spielbretts.
      */
     private static final int[][] fieldScores = getFieldScores();
 
     /**
-     * Kreiert ein Bewertungsobjekt für ein {@code Reversi} Objekt, wobei
-     * das Bewertungsobjekt keinen {@code Player} speichert, sondern aus der
-     * Sicht beider das Spielbrett bewerten kann.
+     * Kreiert ein Bewertungsobjekt für ein {@code Reversi} Objekt mit dem
+     * Spieler, der durch seinen Zug das Spielfeld zuletzt beeinflusst hat.
      *
-     * @param reversi   Entspricht dem zu bewertenden Spielbrett.
+     * @param reversi           Entspricht dem zu bewertenden Spielbrett.
+     * @param playerToAssess    Entspricht dem Spieler, der durch seinen Zug
+     *                          diese Spielsituation geschaffen hat.
      */
-    Score(Reversi reversi) {
-        assert reversi != null;
+    Score(Reversi reversi, Player playerToAssess) {
+        assert reversi != null && playerToAssess != null;
 
         this.reversi = reversi;
+        this.playerToAssess = playerToAssess;
     }
 
     /**
-     * Berechnet den Score aus der Sicht des {@code player}.
+     * Berechnet den Score aus der Sicht des zu bewertenden Spielers
+     * {@code playerToAssess}.
      *
-     * @param player    Entspricht dem Spieler, für den bewertet wird.
      * @return          Gibt den Score des Spielbretts zurück.
-     * @see             #calculateFieldScore(Player)
-     * @see             #calculateMobilityScore(Player, int)
-     * @see             #calculatePotencialScore(Player, int)
+     * @see             #calculateFieldScore()
+     * @see             #calculateMobilityScore(int)
+     * @see             #calculatePotencialScore(int)
      */
-    double calculateScore(Player player) {
-        assert player != null;
-
+    double calculateScore() {
         double score = 0;
         int numberOfTakenFields = reversi.getNumberOfHumanTiles()
                                 + reversi.getNumberOfMachineTiles();
 
-        score += calculateFieldScore(player);
-        score += calculateMobilityScore(player, numberOfTakenFields);
-        score += calculatePotencialScore(player, numberOfTakenFields);
+        score += calculateFieldScore();
+        score += calculateMobilityScore(numberOfTakenFields);
+        score += calculatePotencialScore(numberOfTakenFields);
         return score;
     }
 
     /**
-     * Berechnet den Score der Felder von {@code player}, wobei auch die Felder
-     * des Gegners mit einbezogen werden. Jedes Feld wird anders bewertet.
-     * Diese Bewertungfunktion hat eine Größe von 8 x 8 hartkodiert und kann
-     * somit andere Spielbrette nicht bewerten. Der Score wird mit einer
-     * bestimmten Formel berechnet.
+     * Berechnet den Score der Felder von {@code playerToAsses}, wobei auch
+     * die Felder des Gegners mit einbezogen werden. Jedes Feld wird anders
+     * bewertet. Diese Bewertungfunktion hat eine Größe von 8 x 8 hartkodiert
+     * und kann somit andere Spielbrette nicht bewerten. Der Score wird mit
+     * einer bestimmten Formel berechnet.
      *
-     * @param player        Entspricht dem Spieler, für den bewertet wird.
      * @return              Gibt den Score der Felder zurück.
      */
-    private double calculateFieldScore(Player player) {
-        assert Board.SIZE == 8 && player != null;
+    private double calculateFieldScore() {
+        assert Board.SIZE == 8 && playerToAssess != null;
 
         int playerScore = 0;
         int enemyScore = 0;
         for (int i = 1; i <= Board.SIZE; i++) {
             for (int u = 1; u <= Board.SIZE; u++) {
-                if (reversi.getSlot(i, u) == player) {
+                if (reversi.getSlot(i, u) == playerToAssess) {
                     playerScore += fieldScores[i - 1][u - 1];
-                } else if (reversi.getSlot(i, u) == player.inverse()) {
+                } else if (reversi.getSlot(i, u) == playerToAssess.inverse()) {
                     enemyScore += fieldScores[i - 1][u - 1];
                 }
             }
@@ -85,55 +90,51 @@ public class Score {
     }
 
     /**
-     * Berechnet den Score der Mobilität, der momentan möglichen Züge von
-     * {@code player}, wobei auch die möglichen Züge des Gegners mit einbezogen
-     * werden. Der Score wird mit einer bestimmten Formel berechnet und wird
-     * im Laufe des Spiels immer unwichtiger.
+     * Berechnet den Score der Mobilität, den Score der momentan möglichen Züge
+     * von {@code playerToAsses}, wobei auch die möglichen Züge des Gegners mit
+     * einbezogen werden. Der Score wird mit einer bestimmten Formel berechnet
+     * und wird im Laufe des Spiels immer unwichtiger.
      *
-     * @param player                Entspricht dem Spieler, für den bewertet
-     *                              wird.
      * @param numberOfTakenFields   Entspricht der Anzahl an besetzten Feldern,
      *                              die aufgrund Laufzeit ausgelagert wurde.
      * @return                      Gibt den Score der möglichen Züge zurück.
+     * @see                         Reversi#numberOfLegalMoves(Player)
      */
-    private double calculateMobilityScore(Player player,
-                                          int numberOfTakenFields) {
-        assert player != null;
+    private double calculateMobilityScore(int numberOfTakenFields) {
+        assert playerToAssess != null;
 
         int numberOfFields = Board.SIZE * Board.SIZE;
-        int playerScore = reversi.numberOfLegalMoves(player);
-        int enemyScore = reversi.numberOfLegalMoves(player.inverse());
+        int playerScore = reversi.numberOfLegalMoves(playerToAssess);
+        int enemyScore = reversi.numberOfLegalMoves(playerToAssess.inverse());
         return (numberOfFields / (double) numberOfTakenFields)
                 * (3.0 * playerScore - 4.0 * enemyScore);
 
     }
 
     /**
-     * Berechnet den Score des Potenzials, der in Zukunft möglichen Züge von
-     * {@code player}, wobei auch die zukünftigen, möglichen Züge des Gegners
-     * mit einbezogen werden. Der Score wird mit einer bestimmten Formel
-     * berechnet und wird im Laufe des Spiels immer unwichtiger.
+     * Berechnet den Score des Potenzials, den Score der in Zukunft möglichen
+     * Züge von {@code playerToAssess}, wobei auch die zukünftigen, möglichen
+     * Züge des Gegners mit einbezogen werden. Der Score wird mit einer
+     * bestimmten Formel berechnet und wird im Laufe des Spiels immer
+     * unwichtiger.
      *
-     * @param player                Entspricht dem Spieler, für den bewertet
-     *                              wird.
      * @param numberOfTakenFields   Entspricht der Anzahl an besetzten Feldern,
      *                              die aufgrund Laufzeit ausgelagert wurde.
      * @return                      Gibt den Score der zukünftig möglichen
      *                              Züge zurück.
      * @see                         #countWrappingFields(int, int)
      */
-    private double calculatePotencialScore(Player player,
-                                           int numberOfTakenFields) {
-        assert player != null;
+    private double calculatePotencialScore(int numberOfTakenFields) {
+        assert playerToAssess != null;
 
         int numberOfFields = Board.SIZE * Board.SIZE;
         int playerScore = 0;
         int enemyScore = 0;
         for (int i = 1; i <= Board.SIZE; i++) {
             for (int u = 1; u <= Board.SIZE; u++) {
-                if (reversi.getSlot(i, u) == player) {
+                if (reversi.getSlot(i, u) == playerToAssess) {
                     enemyScore += countWrappingFields(i, u);
-                } else if (reversi.getSlot(i, u) == player.inverse()) {
+                } else if (reversi.getSlot(i, u) == playerToAssess.inverse()) {
                     playerScore += countWrappingFields(i, u);
                 }
             }
@@ -157,8 +158,11 @@ public class Score {
         for (Direction direction: Direction.values()) {
             int rowToCount = row + direction.getY();
             int colToCount = col + direction.getX();
-            if (reversi.getSlot(rowToCount, colToCount) == null) {
-                counter++;
+            if (rowToCount > 0 && rowToCount <= Board.SIZE && colToCount > 0
+                    && colToCount <= Board.SIZE) {
+                if (reversi.getSlot(rowToCount, colToCount) == null) {
+                    counter++;
+                }
             }
         }
         return counter;

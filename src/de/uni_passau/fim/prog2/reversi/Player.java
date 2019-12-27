@@ -1,7 +1,7 @@
 package de.uni_passau.fim.prog2.reversi;
 
 /**
- * {@code Reversi} kann als Mensch vs Bot gespielt werden,
+ * {@code Reversi} kann als Mensch vs Maschine gespielt werden,
  * wobei diese Klasse die Spieler und deren Steine darstellt.
  *
  * @version 21.12.19
@@ -10,12 +10,18 @@ package de.uni_passau.fim.prog2.reversi;
 public enum Player {
 
     HUMAN {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         Player inverse() {
             return MACHINE;
         }
     },
     MACHINE {
+        /**
+         * {@inheritDoc}
+         */
         @Override
         Player inverse() {
             return HUMAN;

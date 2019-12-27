@@ -8,108 +8,49 @@ package de.uni_passau.fim.prog2.reversi;
  * @version 21.12.19
  * @author -----
  */
-public enum Direction {
+enum Direction {
 
-    NORTH {
-        @Override
-        int getX() {
-            return 0;
-        }
+    NORTH(0, -1),
+    NORTH_EAST(1, -1),
+    EAST(1, 0),
+    SOUTH_EAST(1, 1),
+    SOUTH(0, 1),
+    SOUTH_WEST(-1, 1),
+    WEST(-1, 0),
+    NORTH_WEST(-1, -1);
 
-        @Override
-        int getY() {
-            return 1;
-        }
-    },
-    NORTH_EAST {
-        @Override
-        int getX() {
-            return 1;
-        }
+    /**
+     * Entspricht der x-Wert Veränderung für einen Schritt in die
+     * entsprechende Himmelsrichtung.
+     */
+    private final int x;
 
-        @Override
-        int getY() {
-            return 1;
-        }
-    },
-    EAST {
-        @Override
-        int getX() {
-            return 1;
-        }
+    /**
+     * Entspricht der y-Wert Veränderung für einen Schritt in die
+     * entsprechende Himmelsrichtung.
+     */
+    private final int y;
 
-        @Override
-        int getY() {
-            return 0;
-        }
-    },
-    SOUTH_EAST {
-        @Override
-        int getX() {
-            return 1;
-        }
-
-        @Override
-        int getY() {
-            return -1;
-        }
-    },
-    SOUTH {
-        @Override
-        int getX() {
-            return 0;
-        }
-
-        @Override
-        int getY() {
-            return -1;
-        }
-    },
-    SOUTH_WEST {
-        @Override
-        int getX() {
-            return -1;
-        }
-
-        @Override
-        int getY() {
-            return -1;
-        }
-    },
-    WEST {
-        @Override
-        int getX() {
-            return -1;
-        }
-
-        @Override
-        int getY() {
-            return 0;
-        }
-    },
-    NORTH_WEST {
-        @Override
-        int getX() {
-            return -1;
-        }
-
-        @Override
-        int getY() {
-            return 1;
-        }
-    };
+    Direction(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     /**
      * Gibt die durch die Himmelrichtung definierte x-Wert Veränderung zurück.
      *
      * @return      Entspricht den Schritt in x-Richtung.
      */
-    abstract int getX();
+    int getX() {
+        return x;
+    }
 
     /**
      * Gibt die durch die Himmelrichtung definierte y-Wert Veränderung zurück.
      *
      * @return      Entspricht den Schritt in y-Richtung.
      */
-    abstract int getY();
+    int getY() {
+        return y;
+    }
 }

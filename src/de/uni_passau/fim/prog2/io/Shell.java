@@ -65,7 +65,7 @@ public final class Shell {
                 case 'n':
                     final int parameterNumberNew = 0;
                     if (tokens.length == parameterNumberNew + 1) {
-                        ShellToBoard.newBoard();
+                        ShellToBoard.createNewBoard();
                     } else {
                         ShellToBoard.printError("Too much parameters!");
                     }
@@ -95,6 +95,9 @@ public final class Shell {
                         ShellToBoard.printError("Too much or" +
                                 " not enough parameters!");
                     }
+                    break;
+                case 'j':
+                    ShellToBoard.machineMove();
                     break;
                 case 'l':
                     final int parameterNumberLevel = 1;

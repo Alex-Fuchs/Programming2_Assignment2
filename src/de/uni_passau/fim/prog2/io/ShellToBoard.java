@@ -16,21 +16,21 @@ import de.uni_passau.fim.prog2.reversi.Reversi;
 final class ShellToBoard {
 
     /**
-     * Stellt das Objekt des Spiels dar.
+     * Stellt das Objekt des Spiels dar und setzt das Level auf 3 und den
+     * Eröffner auf den Menschen.
      */
-    private static Board board = new Reversi();
+    private static Board board = new Reversi(null);
 
     private ShellToBoard() { }
 
     /**
-     * Setzt das {@code Board} Objekt vollständig zurück, wobei der Eröffner
-     * und das Level gleich bleiben.
+     * Setzt das {@code Board} Objekt vollständig zurück, wobei die
+     * Spieleinstellungen des alten Spiels erhalten bleiben.
      *
-     * @see     Board#getFirstPlayer()
      * @see     Reversi
      */
-    static void newBoard() {
-        board = new Reversi(board.getFirstPlayer(), (Reversi) board);
+    static void createNewBoard() {
+        board = new Reversi((Reversi) board);
     }
 
 
@@ -38,11 +38,19 @@ final class ShellToBoard {
         Integer[] parameter = checkParameters(tokens);
         if (parameter != null) {
             if (parameter[0] <= Board.SIZE && parameter[1] <= Board.SIZE) {
-                board = board.move(parameter[0], parameter[1]);
+                if (board.move(parameter[0], parameter[1]) != null) {
+                    board = board.move(parameter[0], parameter[1]);
+                } else {
+                    System.out.println("nO!");
+                }
             } else {
                 printError("At least one Parameter is too big!");
             }
         }
+    }
+
+    static void machineMove() {
+        board = board.machineMove();
     }
 
     /**
@@ -62,8 +70,8 @@ final class ShellToBoard {
     }
 
     /**
-     * Erstellt ein neues Spiel und tauscht den Eröffner, wobei das
-     * alte Level erhalten bleibt.
+     * Erstellt ein neues Spiel und tauscht den Eröffner, wobei die sonstigen
+     * Spieleinstellungen, das Level, erhalten bleiben.
      *
      * @see     Board#getFirstPlayer()
      * @see     Reversi
