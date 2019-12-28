@@ -51,6 +51,7 @@ public class Reversi implements Board {
      * @param reversi       Entspricht dem alten Spiel. Falls dies {@code null}
      *                      ist, werden die standard Spieleinstellungen
      *                      ausgewählt.
+     * @see                 #setInitialPosition()
      */
     public Reversi(Reversi reversi) {
         if (reversi == null) {
@@ -76,6 +77,7 @@ public class Reversi implements Board {
      * @throws IllegalArgumentException     Wird geworfen, falls
      *                                      {@code firstPlayer} oder
      *                                      {@code reversi} {@code null} ist.
+     * @see                                 #setInitialPosition()
      */
     public Reversi(Player firstPlayer, Reversi reversi) {
         if ((firstPlayer == Player.MACHINE || firstPlayer == Player.HUMAN)
@@ -175,7 +177,7 @@ public class Reversi implements Board {
         if (!gameOver()) {
             if (next() == Player.MACHINE) {
                 Tree tree = new Tree(this, level);
-                return tree.calculateBestMachineMove();
+                return tree.calculateBestMove();
             } else {
                 throw new IllegalMoveException("Human Turn!");
             }
@@ -190,15 +192,17 @@ public class Reversi implements Board {
      * Rechenzeit sehr lang dauern kann. Ein maximales Level ist trotzdem
      * gegeben, da theoretisch nur eine begrenzte Anzahl an Zügen möglich sind.
      *
-     * @param level     Entspricht dem neuen Level der Maschine und muss
-     *                  positiv sein.
+     * @param level                         Entspricht dem neuen Level der
+     *                                      Maschine und muss positiv sein.
+     * @throws IllegalArgumentException     Wird geworfen, falls {@code level}
+     *                                      nicht positiv ist.
      */
     @Override
     public void setLevel(int level) {
         if (level > 0) {
             this.level = level;
         } else {
-            throw new IllegalArgumentException("Level is negative!");
+            throw new IllegalArgumentException("Level is negative or 0!");
         }
     }
 
@@ -357,8 +361,9 @@ public class Reversi implements Board {
      *
      */
     Reversi moveForNextPlayer(int row, int col) {
-        assert row > 0 && row <= Board.SIZE && col > 0 && col <= Board.SIZE;
-        assert next() != null;
+        assert row > 0 && row <= Board.SIZE : "Row is not positive or to big!";
+        assert col > 0 && col <= Board.SIZE : "Col is not positive or to big!";
+        assert next() != null : "Next player cannot be undefined!";
 
         List<Direction> legalDirections = checkLegalityOfMove(row, col, next());
         if (legalDirections.size() > 0) {
@@ -379,7 +384,7 @@ public class Reversi implements Board {
      * @see                     #checkLegalityOfMove(int, int, Player)
      */
     int numberOfLegalMoves(Player player) {
-        assert player != null;
+        assert player != null : "Player cannot be undefined!";
 
         int counter = 0;
         for (int i = 1; i <= game.length; i++) {
@@ -405,14 +410,15 @@ public class Reversi implements Board {
      *                          werden soll.
      * @param player            Entspricht dem Spieler, für den geprüft werden
      *                          soll, ob der Zug legal ist.
-     * @return                  Falls ein Zug legal sind, werden alle legale
+     * @return                  Falls ein Zug legal sind, werden alle legalen
      *                          Richtungen zurückgegeben, andernfalls wird
      *                          keine Richtung zurückgegeben.
      */
-     private List<Direction> checkLegalityOfMove(int row, int col,
+    private List<Direction> checkLegalityOfMove(int row, int col,
                                                  Player player) {
-        assert row > 0 && row <= Board.SIZE && col > 0 && col <= Board.SIZE;
-        assert player != null;
+        assert row > 0 && row <= Board.SIZE : "Row is not positive or to big!";
+        assert col > 0 && col <= Board.SIZE : "Col is not positive or to big!";
+        assert player != null : "Player cannot be undefined!";
 
         List<Direction> legalDirections = new ArrayList<>();
         if (getSlot(row, col) == null) {
@@ -467,9 +473,10 @@ public class Reversi implements Board {
      * @see                     #setNextPlayer()
      */
     private Reversi executeMove(int row, int col, List<Direction> directions) {
-        assert row > 0 && row <= Board.SIZE && col > 0 && col <= Board.SIZE;
-        assert directions.size() > 0;
-        assert next() != null;
+        assert row > 0 && row <= Board.SIZE : "Row is not positive or to big!";
+        assert col > 0 && col <= Board.SIZE : "Col is not positive or to big!";
+        assert directions.size() > 0 : "The move is not legal!";
+        assert next() != null : "Next player cannot be undefined!";
 
         Reversi copy = clone();
         copy.game[row - 1][col - 1] = next();
@@ -503,7 +510,7 @@ public class Reversi implements Board {
      * @see                         #numberOfLegalMoves(Player)
      */
     private void setNextPlayer() {
-        assert nextPlayer != null;
+        assert next() != null : "Old player cannot be undefined!";
 
         nextPlayer = nextPlayer.inverse();
         if (numberOfLegalMoves(nextPlayer) == 0) {
@@ -540,7 +547,7 @@ public class Reversi implements Board {
      * Spielfelds.
      */
     private void setInitialPosition() {
-        assert firstPlayer != null;
+        assert firstPlayer != null : "First player cannot be undefined!";
 
         int median = Board.SIZE / 2 - 1;
         game[median][median] = firstPlayer.inverse();

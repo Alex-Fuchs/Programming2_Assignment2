@@ -18,8 +18,7 @@ class Score {
     private Reversi reversi;
 
     /**
-     * Entspricht den zu bewertenden Spieler, der somit durch seinen Zug
-     * diese Spielsituation geschaffen hat.
+     * Entspricht den zu bewertenden Spieler.
      */
     private Player playerToAssess;
 
@@ -30,14 +29,14 @@ class Score {
 
     /**
      * Kreiert ein Bewertungsobjekt für ein {@code Reversi} Objekt mit dem
-     * Spieler, der durch seinen Zug das Spielfeld zuletzt beeinflusst hat.
+     * zu bewertenden Spieler.
      *
      * @param reversi           Entspricht dem zu bewertenden Spielbrett.
-     * @param playerToAssess    Entspricht dem Spieler, der durch seinen Zug
-     *                          diese Spielsituation geschaffen hat.
+     * @param playerToAssess    Entspricht dem zu bewertenden Spieler.
      */
     Score(Reversi reversi, Player playerToAssess) {
-        assert reversi != null && playerToAssess != null;
+        assert reversi != null : "Reversi to assess cannot be undefined";
+        assert playerToAssess != null : "Player to asses cannot be undefined";
 
         this.reversi = reversi;
         this.playerToAssess = playerToAssess;
@@ -53,6 +52,9 @@ class Score {
      * @see             #calculatePotencialScore(int)
      */
     double calculateScore() {
+        assert reversi != null : "Reversi to assess cannot be undefined";
+        assert playerToAssess != null : "Player to asses cannot be undefined";
+
         double score = 0;
         int numberOfTakenFields = reversi.getNumberOfHumanTiles()
                                 + reversi.getNumberOfMachineTiles();
@@ -73,7 +75,9 @@ class Score {
      * @return              Gibt den Score der Felder zurück.
      */
     private double calculateFieldScore() {
-        assert Board.SIZE == 8 && playerToAssess != null;
+        assert Board.SIZE == 8 : "Calculating is only for 8x8 possible";
+        assert reversi != null : "Reversi to assess cannot be undefined";
+        assert playerToAssess != null : "Player to asses cannot be undefined";
 
         int playerScore = 0;
         int enemyScore = 0;
@@ -101,7 +105,8 @@ class Score {
      * @see                         Reversi#numberOfLegalMoves(Player)
      */
     private double calculateMobilityScore(int numberOfTakenFields) {
-        assert playerToAssess != null;
+        assert reversi != null : "Reversi to assess cannot be undefined";
+        assert playerToAssess != null : "Player to asses cannot be undefined";
 
         int numberOfFields = Board.SIZE * Board.SIZE;
         int playerScore = reversi.numberOfLegalMoves(playerToAssess);
@@ -125,7 +130,8 @@ class Score {
      * @see                         #countWrappingFields(int, int)
      */
     private double calculatePotencialScore(int numberOfTakenFields) {
-        assert playerToAssess != null;
+        assert reversi != null : "Reversi to assess cannot be undefined";
+        assert playerToAssess != null : "Player to asses cannot be undefined";
 
         int numberOfFields = Board.SIZE * Board.SIZE;
         int playerScore = 0;
@@ -152,7 +158,9 @@ class Score {
      * @return          Gibt die Anzahl der anliegenden Felder zurück.
      */
     private int countWrappingFields(int row, int col) {
-        assert row > 0 && row <= Board.SIZE && col > 0 && col <= Board.SIZE;
+        assert row > 0 && row <= Board.SIZE : "Row is not positive or to big!";
+        assert col > 0 && col <= Board.SIZE : "Col is not positive or to big!";
+        assert reversi != null : "Reversi to assess cannot be undefined";
 
         int counter = 0;
         for (Direction direction: Direction.values()) {
