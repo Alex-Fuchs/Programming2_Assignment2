@@ -14,7 +14,7 @@ class IllegalMoveException extends RuntimeException {
      * Vewendet lediglich den Super Konstruktor zur Instanziierung der
      * {@code IllegalMoveException}.
      */
-    public IllegalMoveException() {
+    IllegalMoveException() {
         super();
     }
 
@@ -24,7 +24,7 @@ class IllegalMoveException extends RuntimeException {
      *
      * @param message       Entspricht der Fehlernachricht.
      */
-    public IllegalMoveException(String message) {
+    IllegalMoveException(String message) {
         super(message);
     }
 }

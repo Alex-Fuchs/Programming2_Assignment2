@@ -91,18 +91,20 @@ class Tree {
      */
     Reversi calculateBestMove() {
         assert !root.gameOver() : "The game must not be already over!";
-        assert children.size() > 0: "The game must have children because" +
-                " the game is not over yet!";
+        assert children.size() > 0 : "The game must have children because"
+                + " the game is not over yet!";
         assert root.next() != null : "The next player cannot be undefined!";
 
-        Reversi bestMove = children.get(0).root;
-        double bestScoreOfChildren = Double.MIN_VALUE;
-        for (Tree t: children) {
-            double scoreOfChild = t.calculateScore(root.next());
+        Tree firstChild = children.get(0);
+        Reversi bestMove = firstChild.root;
+        double bestScoreOfChildren = firstChild.calculateScore(root.next());
+        for (int i = 1; i < children.size(); i++) {
+            Tree child = children.get(i);
+            double scoreOfChild = child.calculateScore(root.next());
 
             if (scoreOfChild > bestScoreOfChildren) {
                 bestScoreOfChildren = scoreOfChild;
-                bestMove = t.root;
+                bestMove = child.root;
             }
         }
         return bestMove;
@@ -118,8 +120,8 @@ class Tree {
      * @see                     #calculateScoreOfChildren(Player)
      */
     private double calculateScore(Player playerToAssess) {
-        assert playerToAssess != null: "The player to asses cannot" +
-                " be undefined!";
+        assert playerToAssess != null : "The player to asses cannot"
+                + " be undefined!";
 
         Score score = new Score(root, playerToAssess);
         double scoreOfRoot = score.calculateScore();
@@ -140,25 +142,25 @@ class Tree {
      */
     private double calculateScoreOfChildren(Player playerToAssess) {
         assert children.size() > 0 : "There must be at least 1 child!";
-        assert playerToAssess != null: "The player to asses cannot" +
-                " be undefined!";
+        assert playerToAssess != null : "The player to asses cannot"
+                + " be undefined!";
 
-        double result = children.get(0).calculateScore(playerToAssess);
+        double scoreOfChildren = children.get(0).calculateScore(playerToAssess);
         for (int i = 1; i < children.size(); i++) {
             Tree child = children.get(i);
             double scoreOfChild = child.calculateScore(playerToAssess);
 
             if (root.next() == playerToAssess) {
-                if (result < scoreOfChild) {
-                    result = scoreOfChild;
+                if (scoreOfChildren < scoreOfChild) {
+                    scoreOfChildren = scoreOfChild;
                 }
             } else {
-                if (result > scoreOfChild) {
-                    result = scoreOfChild;
+                if (scoreOfChildren > scoreOfChild) {
+                    scoreOfChildren = scoreOfChild;
                 }
             }
         }
-        return result;
+        return scoreOfChildren;
     }
 
 }

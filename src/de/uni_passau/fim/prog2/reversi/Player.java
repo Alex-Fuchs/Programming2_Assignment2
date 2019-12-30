@@ -9,6 +9,9 @@ package de.uni_passau.fim.prog2.reversi;
  */
 public enum Player {
 
+    /**
+     * Entspricht dem menschlichen Spieler.
+     */
     HUMAN {
         /**
          * {@inheritDoc}
@@ -18,6 +21,9 @@ public enum Player {
             return MACHINE;
         }
     },
+    /**
+     * Entspricht der Maschine.
+     */
     MACHINE {
         /**
          * {@inheritDoc}

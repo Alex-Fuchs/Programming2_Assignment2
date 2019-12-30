@@ -60,12 +60,13 @@ public final class Shell {
             String[] tokens = input.trim().split("\\s+");
             tokens[0] = tokens[0].toLowerCase();
 
-            if (!tokens[0].equals("")) {
+            if (!tokens[0].isEmpty()) {
                 switch (tokens[0].charAt(0)) {
                 case 'n':
                     final int parameterNumberNew = 0;
                     if (tokens.length == parameterNumberNew + 1) {
                         ShellToBoard.createNewBoard();
+                        ShellToBoard.machineMove();
                     } else {
                         ShellToBoard.printError("Too much parameters!");
                     }
@@ -79,7 +80,7 @@ public final class Shell {
                     }
                     break;
                 case 'q':
-                    final int parameterNumberQuit= 0;
+                    final int parameterNumberQuit = 0;
                     if (tokens.length == parameterNumberQuit + 1) {
                         quit = true;
                     } else {
@@ -91,13 +92,11 @@ public final class Shell {
                     if (tokens.length == parameterNumberMove + 1) {
                         String[] parametersForMove = {tokens[1], tokens[2]};
                         ShellToBoard.move(parametersForMove);
+                        ShellToBoard.machineMove();
                     } else {
-                        ShellToBoard.printError("Too much or" +
-                                " not enough parameters!");
+                        ShellToBoard.printError("Too much or"
+                                + " not enough parameters!");
                     }
-                    break;
-                case 'j':
-                    ShellToBoard.machineMove();
                     break;
                 case 'l':
                     final int parameterNumberLevel = 1;
@@ -105,14 +104,15 @@ public final class Shell {
                         String[] parametersForLevel = {tokens[1]};
                         ShellToBoard.setLevel(parametersForLevel);
                     } else {
-                        ShellToBoard.printError("Too much or" +
-                                " not enough parameter!");
+                        ShellToBoard.printError("Too much or"
+                                + " not enough parameter!");
                     }
                     break;
                 case 's':
                     final int parameterNumberSwitch = 0;
                     if (tokens.length == parameterNumberSwitch + 1) {
                         ShellToBoard.switchPlayerOrder();
+                        ShellToBoard.machineMove();
                     } else {
                         ShellToBoard.printError("Too much parameters!");
                     }

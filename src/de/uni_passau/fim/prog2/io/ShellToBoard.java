@@ -33,24 +33,77 @@ final class ShellToBoard {
         board = new Reversi((Reversi) board);
     }
 
-
+    /**
+     * Falls der Mensch ziehen kann, wird geprüft, ob der Zug legal ist und
+     * bei Legalität wird der Zug ausgeführt. Gibt ebenfalls den Gewinner aus,
+     * falls das Spiel vorbei ist. Gibt auch aus, ob die Maschine aussetzen
+     * muss.
+     *
+     * @param tokens    Entspricht der Zeile und der Spalte, auf den ein Stein
+     *                  gelegt werden soll.
+     * @see             #checkParameters(String[])
+     * @see             #printWinner()
+     * @see             #checkMissTurn(Player)
+     * @see             Board#gameOver()
+     * @see             Board#next()
+     * @see             Board#move(int, int)
+     */
     static void move(String[] tokens) {
-        Integer[] parameter = checkParameters(tokens);
-        if (parameter != null) {
-            if (parameter[0] <= Board.SIZE && parameter[1] <= Board.SIZE) {
-                if (board.move(parameter[0], parameter[1]) != null) {
-                    board = board.move(parameter[0], parameter[1]);
-                } else {
-                    System.out.println("nO!");
+        if (!board.gameOver()) {
+            if (board.next() == Player.HUMAN) {
+                Integer[] parameters = checkParameters(tokens);
+                if (parameters != null) {
+                    int row = parameters[0];
+                    int col = parameters[1];
+                    if (row <= Board.SIZE && col <= Board.SIZE) {
+                        Board move = board.move(row, col);
+
+                        if (move != null) {
+                            board = move;
+                            if (board.gameOver()) {
+                                printWinner();
+                            } else {
+                                checkMissTurn(Player.HUMAN);
+                            }
+                        } else {
+                            printError("Invalid move at (" + row + ", "
+                                    + col + ")!");
+                        }
+                    } else {
+                        printError("At least one parameter is too big!");
+                    }
                 }
             } else {
-                printError("At least one Parameter is too big!");
+                printError("Machine turn!");
             }
+        } else {
+            printError("The game is already over!");
         }
     }
 
+    /**
+     * Die Maschine zieht, falls sie ziehen kann und sie tut dies solange, wie
+     * sie am Stück ziehen kann. Gibt ebenfalls den Gewinner aus, falls das
+     * Spiel vorbei ist. Gibt auch aus, ob die Maschine aussetzen muss.
+     *
+     * @see             #printWinner()
+     * @see             #checkMissTurn(Player)
+     * @see             Board#gameOver()
+     * @see             Board#next()
+     * @see             Board#machineMove()
+     */
     static void machineMove() {
-        board = board.machineMove();
+        if (!board.gameOver()) {
+            if (board.next() == Player.MACHINE) {
+                board = board.machineMove();
+                if (board.gameOver()) {
+                    printWinner();
+                } else {
+                    checkMissTurn(Player.MACHINE);
+                    machineMove();
+                }
+            }
+        }
     }
 
     /**
@@ -85,8 +138,10 @@ final class ShellToBoard {
     }
 
     /**
-     * Gibt die kanonische Darstellung von {@code board} zurück.
+     * Gibt die kanonische Darstellung von {@code board} zurück, falls das
+     * Spiel noch nicht vorbei ist.
      *
+     * @see     Board#gameOver()
      * @see     Board#toString()
      */
     static void print() {
@@ -122,8 +177,8 @@ final class ShellToBoard {
      * @param message       Entspricht einer kurzen Beschreibung des Fehlers.
      */
     static void printError(String message) {
-        final String errorMessage = "Error!";
-        System.out.println(errorMessage + " " + message);
+        final String errorMessage = "Error! ";
+        System.out.println(errorMessage + message);
     }
 
     /**
@@ -151,5 +206,40 @@ final class ShellToBoard {
             }
         }
         return parameters;
+    }
+
+    /**
+     * Prüft, ob das Spiel vorbei ist und falls wird der Gewinner ausgegeben.
+     *
+     * @see         Board#getWinner()
+     */
+    private static void printWinner() {
+        assert board.gameOver() : "The game is not over!";
+
+        Player winner = board.getWinner();
+        if (winner == Player.HUMAN) {
+            System.out.println("You have won!");
+        } else if (winner == Player.MACHINE) {
+            System.out.println("Machine has won.");
+        } else {
+            System.out.println("Tie game!");
+        }
+    }
+
+    /**
+     * Prüft, ob ein Spieler aussetzen muss.
+     *
+     * @param playerMoved       Entspricht dem Spieler, der den letzten Zug
+     *                          gemacht hat.
+     * @see                     Board#next()
+     */
+    private static void checkMissTurn(Player playerMoved) {
+        if (board.next() == playerMoved) {
+            if (playerMoved == Player.HUMAN) {
+                System.out.println("The bot has to miss a turn");
+            } else {
+                System.out.println("Human has to miss a turn");
+            }
+        }
     }
 }

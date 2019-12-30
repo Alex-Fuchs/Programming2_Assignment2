@@ -1,0 +1,1390 @@
+othello>    
+Error! Please enter a command!
+othello> 
+Error! Please enter a command!
+othello> dfas re asda
+Error! Type help for overview!
+othello> h ewq
+Error! Too much parameters!
+othello> h 5
+Error! Too much parameters!
+othello> h
+**********
+Othello:
+h: prints all commands
+q: game quit
+n: creates a new game
+m <integer x> <integer y>: sets stone to row x, col y
+l <integer x>: sets the level to x
+s: switches the player order
+p: prints the current board
+The board is always square with the size: 8
+The row and col is indexed with 1,...,8
+the Level can be set to 1,...,8
+**********
+othello> n 5dsa
+Error! Too much parameters!
+othello> n
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> p dsa
+Error! Too much parameters!
+othello> s dsa
+Error! Too much parameters!
+othello> s
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . O . . . .
+. . . O O . . .
+. . . O X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> n
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . O . . . .
+. . . O O . . .
+. . . O X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> s
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> l d
+Error! At least one parameter is no integer or too big!
+othello> l -5
+Error! At least one parameter is not positive!
+othello> l 1
+othello> l 1000
+othello> l 3
+othello> l
+Error! Too much or not enough parameter!
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 4
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O X . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 6 6
+Error! Invalid move at (6, 6)!
+othello> m d r
+Error! At least one parameter is no integer or too big!
+othello> m d
+Error! Too much or not enough parameters!
+othello> m
+Error! Too much or not enough parameters!
+othello> m d r 3
+Error! Too much or not enough parameters!
+othello> m 4 5 2
+Error! Too much or not enough parameters!
+othello> m 21 8
+Error! At least one parameter is too big!
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O X . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 6 5
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O X . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . X O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 5 6
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O O O . . .
+. . . O X . . .
+. . . X X X . .
+. . . . X O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 2 5
+othello> p
+. . . . . O . .
+. . . . O . . .
+. . O O X . . .
+. . . O X . . .
+. . . X X X . .
+. . . . X O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 2
+othello> p
+. . . . . O . .
+. . . . O . . .
+. X X X O . . .
+. . . O O . . .
+. . . X O X . .
+. . . . O O . .
+. . . . O . . .
+. . . . . . . .
+othello> m 3 6
+othello> p
+. . . . . O . .
+. . . . O . . .
+. X X X X O . .
+. . . O X . O .
+. . . X O O . .
+. . . . O O . .
+. . . . O . . .
+. . . . . . . .
+othello> m 8 5
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O . .
+. . . O X . O .
+. . . X X O . .
+. . . . X O . .
+. . . . X . . .
+. . . . X . . .
+othello> m 3 8
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O . X
+. . . O X . O .
+. . . X X X . O
+. . . . X O . .
+. . . . X . . .
+. . . . X . . .
+othello> m 4 3
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O . X
+. . X O X . O .
+. . . O X X . O
+. . . O O O . .
+. . . . X . . .
+. . . . X . . .
+othello> m 5 3
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O . X
+. . O O O . O .
+. . O O X X . O
+. . O O O O . .
+. . . . X . . .
+. . . . X . . .
+othello> m 7 6
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O . X
+. . O O O . O .
+. . O O X O . O
+. . O O O O O .
+. . . . X X . .
+. . . . X . . .
+othello> m 4 6
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O . X
+. . O O O O O .
+. . O O X O . O
+. . O O O O O .
+. . . . O O . .
+. . . . X O . .
+othello> m 3 7
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O X X
+. . O O O X O .
+. . O O X O . O
+. . O O O O O .
+. . . . O O . .
+. . . O O O . .
+othello> m 5 7
+othello> p
+. . . . . O . .
+. . . . O . . .
+O O O O O O X X
+. . O O O O X .
+. . O O X X O O
+. . O O O O O O
+. . . . O O . .
+. . . O O O . .
+othello> m 7 4
+othello> p
+. . . . . O . .
+. . . . O . O .
+O O O O O O O X
+. . O O O O O .
+. . O O X X O O
+. . O O X O O O
+. . . X O O . .
+. . . O O O . .
+othello> m 2 6
+othello> p
+. . . . . O . .
+. . . . O X O .
+O O O O O X O X
+. . O O O X O .
+. . O O X O O O
+. . O O O O O O
+. . . O O O . .
+. . O O O O . .
+othello> m 2 8
+othello> p
+. . . . . O . O
+. . . . O X O X
+O O O O O O X X
+. . O O O X O .
+. . O O X O O O
+. . O O O O O O
+. . . O O O . .
+. . O O O O . .
+othello> m 7 7
+othello> p
+. . . . . O . O
+. . . . O X O X
+O O O O O O X X
+. . O O O X X .
+. . O O O O X O
+. . O O O O X O
+. . . O O O O .
+. . O O O O . O
+othello> m 6 2
+othello> p
+. . . . . O . O
+. . . . O X O O
+O O O O X O X O
+. . O X O O O O
+. . X O O O O O
+. X X X X O X O
+. . . O O O O .
+. . O O O O . O
+othello> m 2 3
+othello> p
+. . . . . O . O
+. . X . O X O O
+O O X X X O X O
+. . X X X O O O
+. . X O O X O O
+O O O O O O X O
+. . . O O O O .
+. . O O O O . O
+othello> m 7 1
+othello> p
+. . . . . O . O
+. . X . O X O O
+O O X X X O X O
+. . X X X O O O
+. . X O O X O O
+O X O O O O X O
+O . . O O O O .
+O . O O O O . O
+othello> m 7 3
+othello> p
+. . O . . O . O
+. . O . O X O O
+O O O X X O X O
+. . O X X X O O
+. . O O X X O O
+O X O X O O X O
+O . O O O O O .
+O . O O O O . O
+othello> m 2 4
+othello> p
+. . O O . O . O
+. . O O O X O O
+O O O O X O X O
+. . O O X X O O
+. . O O X X O O
+O X O X O O X O
+O . O O O O O .
+O . O O O O . O
+othello> m 5 2
+othello> p
+. . O O . O . O
+. . O O O X O O
+O O O O X O X O
+. . O O X X O O
+O O O O O O O O
+O O O X O O X O
+O . O O O O O .
+O . O O O O . O
+othello> m 4 2
+othello> p
+. . O O . O . O
+. . O O O X O O
+O O O O X O X O
+O O O O O O O O
+O O X O O O O O
+O O O X O O X O
+O . O O O O O .
+O . O O O O . O
+othello> m 1 7
+othello> p
+. . O O O O X O
+. . O O O O X O
+O O O O X O O O
+O O O O O O O O
+O O X O O O O O
+O O O X O O X O
+O . O O O O O .
+O . O O O O . O
+othello> m 1 2
+othello> p
+O O O O O O O O
+. . X O O O X O
+O O O X X O O O
+O O O O X O O O
+O O X O O X O O
+O O O X O O X O
+O . O O O O O .
+O . O O O O . O
+othello> mm 8 2
+othello> p
+O O O O O O O O
+. . X O O O X O
+O O O X X O O O
+O O O O X O O O
+O O X O O X O O
+O O O X O O X O
+O O O O O O O .
+O X O O O O . O
+othello> m 8 7
+othello> p
+O O O O O O O O
+. . O O O O X O
+O O O O X O O O
+O O O O O O O O
+O O X O O O O O
+O O O X O O O O
+O O O O O O O O
+O X X X X X X O
+othello> m 2 2
+Machine has won.
+othello> p
+O O O O O O O O
+O O O O O O O O
+O O O O X O O O
+O X O O O O O O
+O X X O O O O O
+O X O X O O O O
+O X O O O O O O
+O X X X X X X O
+othello> n
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> s
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . O . . . .
+. . . O O . . .
+. . . O X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 3
+othello> p
+. . . . . . . .
+. . . . . . . .
+. O O O . . . .
+. . . X O . . .
+. . . O X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 2 3
+Error! Invalid move at (2, 3)!
+othello> m 2 2
+othello> p
+. . . . . . . .
+. X . . . . . .
+. O X O . . . .
+. . O O O . . .
+. . . O X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 5 3
+othello> p
+O . . . . . . .
+. O . . . . . .
+. O O O . . . .
+. . X O O . . .
+. . X X X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 5
+othello> p
+O . . . . . . .
+. O . . . . . .
+. O O O O O . .
+. . X X X . . .
+. . X X X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 2 7
+othello> p
+O . . . . . . .
+. O . . . . X .
+. O O O O O O .
+. . X X X . . .
+. . X X X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 4 7
+othello> p
+O . . . . . . O
+. O . . . . O .
+. O O O O O X .
+. . X X X . X .
+. . X X X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 1 3
+Error! Invalid move at (1, 3)!
+othello> m 3 1
+othello> p
+O . . . . . . O
+. O . . . . O .
+X X O X X X X .
+. . X O X . X .
+. . X X O . . .
+. . . . . O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 5 6
+othello> p
+O . . . . . . O
+. O . . . . O .
+X X O O O O O O
+. . X O X . X .
+. . X X X X . .
+. . . . . O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 7 7
+othello> p
+O . . . . . . O
+. O . . . . O .
+X X O O O O O O
+. . X O X . X .
+. . X X O X . .
+. . . . . O . .
+. . . . . . O .
+. . . . . . . O
+othello> m 1 7
+othello> p
+O . . . . . X O
+. O . . . . X .
+X X O O O O X O
+. . O O O . X .
+. . O O O X . .
+. . O . . O . .
+. . . . . . O .
+. . . . . . . O
+othello> m 2 3
+othello> p
+O . O . . . X O
+. O O . . . X .
+X X O X O O X O
+. . O O X . X .
+. . O O O X . .
+. . O . . O . .
+. . . . . . O .
+. . . . . . . O
+othello> m 1 2
+othello> p
+O X O . . . X O
+. X X . . . X .
+X X O X O O X O
+. . O O X . O .
+. . O O O O . .
+. . O . O O . .
+. . . . . . O .
+. . . . . . . O
+othello> m 7 3
+othello> p
+O X O . . . X O
+. X O . . . X .
+X X O X O O X O
+. . O O X . O .
+. . O O O O . .
+. . O . O O . .
+. . O . . . O .
+. . O . . . . O
+othello> m 2 4
+othello> p
+O X O O . . X O
+. X X O . . X .
+X X O O O O X O
+. . O O X . O .
+. . O O O O . .
+. . O . O O . .
+. . O . . . O .
+. . O . . . . O
+othello> m 2 5
+othello> p
+O X O O . . X O
+. X X O X . X .
+X X O O O O X O
+. . O O O O O .
+. . O O O O . .
+. . O . O O . .
+. . O . . . O .
+. . O . . . . O
+othello> m 7 6
+othello> p
+O X O O . . X O
+. X X O X . X .
+X X O O O O X O
+. . X O O O O .
+. . O X O O . .
+. . O . X O . .
+. . O . . O O .
+. . O . . O . O
+othello> m 1 5
+othello> p
+O O O O O O O O
+. X X O O . O .
+X X O O O O X O
+. . X O O O O .
+. . O X O O . .
+. . O . X O . .
+. . O . . O O .
+. . O . . O . O
+othello> n 2 6
+Error! Too much parameters!
+othello> m 2 6
+othello> p
+O O O O O O O O
+O O O O O O O .
+X O O O O O X O
+. . O O O O O .
+. . O O O O . .
+. . O . O O . .
+. . O . . O O .
+. . O . . O . O
+othello> m 6 4
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O X O
+O . O O O X O .
+. . O O X O . .
+. . O X O O . .
+. . O . . O O .
+. . O . . O . O
+othello> m 6 7
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O X O
+O . O O O X O .
+. . O O X O . .
+. . O O O O O O
+. . O . . O O .
+. . O . . O . O
+othello> m 5 2
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O X O
+O . O O O X O .
+O O O O O O . .
+. . O O O O O O
+. . O . . O O .
+. . O . . O . O
+othello> m 4 7
+Error! Invalid move at (4, 7)!
+othello> m 5 7
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O X O
+O . O O O X O .
+O O O O O O O O
+. . O O O O O O
+. . O . . O O .
+. . O . . O . O
+othello> m 7 7
+Error! Invalid move at (7, 7)!
+othello> m 8 7
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O O O
+O . O O O O O O
+O O O O O O O O
+. . O O O O X O
+. . O . . O X .
+. . O . . O X O
+othello> m 7 5
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O O O
+O . O O O O O O
+O O O O O O O O
+. . O O O O O O
+. . O . X X X O
+. . O . . O X O
+othello> m 4 2
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O O O
+O X O O O O O O
+O O X O O O O O
+. . O O O O O O
+. . O O O O O O
+. . O . . O X O
+othello> m 8 5
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O O O
+O X O O O O O O
+O O O O O O O O
+. O O O O O O O
+. . O O O O O O
+. . O . X X X O
+othello> m 7 2
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O O O
+O X O O O O O O
+O X O O O O O O
+. X O O O O O O
+. O O O O O O O
+O . O . X X X O
+othello> m 8 2
+othello> p
+O O O O O O O O
+O O O O O O O .
+O O O O O O O O
+O X O O O O O O
+O X O O O O O O
+. X O O O O O O
+. X O O O O O O
+O X O O O O O O
+othello> m 2 8
+othello> p
+O O O O O O O O
+O O O O O O O X
+O O O O O O X O
+O X O O O X O O
+O O O O X O O O
+O O O X O O O O
+. O X O O O O O
+O X O O O O O O
+othello> m 7 1
+Machine has won.
+othello> n
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . O . . . .
+. . . O O . . .
+. . . O X . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> s
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 4
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O X . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 5 6
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O X . . . .
+. . . O X . . .
+. . . X O X . .
+. . . . . O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 4 3
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O X . . . .
+. . X X X O . .
+. . . X O O . .
+. . . . . O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 2
+othello> p
+. . . . . . . .
+. . . . . . . .
+. X X X . . . .
+. O O O O O . .
+. . . X O O . .
+. . . . . O . .
+. . . . . . . .
+. . . . . . . .
+othello> l 5
+othello> m 5 2
+othello> p
+. . . . . . . .
+. . . . . . . .
+. X X X . . . .
+O O O O O O . .
+. X . X O O . .
+. . . . . O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 5 3
+othello> p
+. . . . . . . .
+. . . . . . . .
+. X X X . . . .
+O O X O O O . .
+O O O O O O . .
+. . . . . O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 6 4
+pothello> 
+Error! Please enter a command!
+othello> p
+. . . . . . . .
+. . O . . . . .
+. O O O . . . .
+O O O X O O . .
+O O O X O O . .
+. . . X . O . .
+. . . . . . . .
+. . . . . . . .
+othello> m 4 6
+Error! Invalid move at (4, 6)!
+othello> m 4 7
+othello> p
+. . . . . . . .
+. . O . . . . .
+. O O O . . . .
+O O O O X X X .
+O O O O O O . .
+. . . O . O . .
+. . . O . . . .
+. . . . . . . .
+othello> m 7 6
+othello> p
+. . . . . . . .
+. . O . . . . .
+. O O O . . . .
+O O O O O O O O
+O O O O O X . .
+. . . O . X . .
+. . . O . X . .
+. . . . . . . .
+othello> m 3 8
+othello> p
+. . . . . . . .
+. . O . . . . O
+. O O O . . . O
+O O O O O O X O
+O O O O O X . .
+. . . O . X . .
+. . . O . X . .
+. . . . . . . .
+othello> m 3 6
+othello> p
+. . . . . . . .
+. . O . . . . O
+. O O O . X . O
+O O O O O X X O
+O O O O O X . .
+. . . O . O . .
+. . . O . X O .
+. . . . . . . .
+othello> m 6 3
+pothello> p
+. . . . . . . .
+. . O . . . . O
+. O O O . X . O
+O O O O X X X O
+O O O X O X . .
+. O O O . O . .
+. . . O . X O .
+. . . . . . . .
+othello> m 2 1
+othello> p
+. . . . . . . .
+X . O . . . . O
+. X O O . X . O
+O O X O X X X O
+O O O X O X . .
+. O O O . O . .
+. . . O . O O .
+. . . . . O . .
+othello> m 1 4
+othello> p
+. . . X . . . .
+X . X . . O . O
+. X O O . O . O
+O O X O X O X O
+O O O X O O . .
+. O O O . O . .
+. . . O . O O .
+. . . . . O . .
+othello> m 7 2
+othello> p
+. . . X . . . .
+X . X . . O . O
+. X O O . O . O
+O X X O O O X O
+O X O O O O . .
+. X O O . O . .
+. O . O . O O .
+O . . . . O . .
+othello> m 3 5
+othello> p
+. . . X . . . .
+X . X O . O . O
+. X O O O O . O
+O O X O O O X O
+O X X O O O . .
+. X O O . O . .
+. O . O . O O .
+O . . . . O . .
+othello> m 2 5
+othello> p
+. . . X . . . .
+X . X X X O . O
+O O O X O X . O
+O O X O O O X O
+O X X O O O . .
+. X O O . O . .
+. O . O . O O .
+O . . . . O . .
+othello> m 2 2
+othello> p
+O . . X . . . .
+O O X X X O . O
+O X O X O X . O
+O X X O O O X O
+O X X O O O . .
+. X O O . O . .
+. O . O . O O .
+O . . . . O . .
+othello> m 1 6
+othello> p
+O . . X O X . .
+O O X O O X . O
+O X O X O X . O
+O X X O O O X O
+O X X O O O . .
+. X O O . O . .
+. O . O . O O .
+O . . . . O . .
+othello> m 6 5
+othello> p
+O . . X O X . .
+O O X O O X . O
+O X O O O X . O
+O X O O O O X O
+O O X X O X . .
+O O O O O O . .
+. O . O . O O .
+O . . . . O . .
+othello> m 8 3
+othello> p
+O . . X O X . .
+O O X O O O . O
+O X O O O O O O
+O X O O O O X O
+O O X X O X . .
+O O O O X O . .
+. O . X . O O .
+O . X . . O . .
+othello> m 8 2
+othello> p
+O . . X O X . .
+O O X O O O . O
+O X O O O O O O
+O X O O O O X O
+O X X X O X . .
+O X O O X O . .
+. X . O . O O .
+O O O O . O . .
+othello> m 1 2
+othello> p
+O O O O O X . .
+O O O O O O . O
+O X O O O O O O
+O X O O O O X O
+O X X X O X . .
+O X O O X O . .
+. X . O . O O .
+O O O O . O . .
+othello> m 1 7
+othello> p
+O O O O O O O O
+O O O O O X . O
+O X O O X O O O
+O X O X O O X O
+O X X X O X . .
+O X O O X O . .
+. X . O . O O .
+O O O O . O . .
+othello> m 7 3
+othello> p
+O O O O O O O O
+O O O O O O . O
+O X O O O O O O
+O X O O O O X O
+O X O X O X . .
+O O X O X O . .
+O O O O . O O .
+O O O O . O . .
+othello> m 6 7
+othello> p
+O O O O O O O O
+O O O O O O . O
+O X O O O O O O
+O X O O O O X O
+O X O X O X . .
+O O X O O O O O
+O O O O . O O .
+O O O O . O . .
+othello> m 1 7
+Error! Invalid move at (1, 7)!
+othello> m 2 7
+othello> p
+O O O O O O O O
+O O O O O O X O
+O X O O O O X O
+O X O O X O O O
+O X O X O X . O
+O O X O O O O O
+O O O O . O O .
+O O O O . O . .
+othello> m 5 7
+The bot has to miss a turn
+othello> p
+O O O O O O O O
+O O O O O O X O
+O X O O O O X O
+O X O O X O X O
+O X O X O X X O
+O O X O O O O O
+O O O O . O O .
+O O O O . O . .
+othello> m 7 5
+othello> p
+O O O O O O O O
+O O O O O O X O
+O X O O O O X O
+O X O O O O X O
+O X X X O X X O
+O O X X O X O O
+O O O O O O O .
+O O O O O O . .
+othello> m 8 8
+othello> p
+O O O O O O O O
+O O O O O O X O
+O X O O O O X O
+O X O O O O X O
+O X X X O X X O
+O O X X O X O O
+O O O O O O O .
+O O O O O O O X
+othello> m 7 8
+Machine has won.
+othello> q
+
+Process finished with exit code 0
+
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> l 1
+othello> m 3 4
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O X . . . .
+. . . O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 4 3
+othello> p
+. . . . . . . .
+. . . . . . . .
+. . O O O . . .
+. . X X O . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 2 6
+othello> p
+. . . . . . . .
+. . . . . X . .
+. . O O X . . .
+. O O O O . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 6
+othello> p
+. . . . . . . .
+. . . . . X . .
+. . O O O O O .
+. O O O X . . .
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 4 8
+othello> p
+. . . . . . . .
+. . . . . X . .
+. . O O O O O O
+. O O O X . . X
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 2 8
+othello> p
+. . . . . O . .
+. . . . . O . X
+. . O O O O O X
+. O O O X . . X
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 3 1
+Error! Invalid move at (3, 1)!
+othello> m 3 2
+othello> p
+. . . . . O . .
+. . . O . O . X
+. X O O X X X X
+. O X O X . . X
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 1 4
+othello> p
+. . . X . O . .
+. . . X . O . X
+. X O X X O X X
+. O O O O O . X
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 2 7
+othello> p
+. . O X . O . .
+. . . O . O X X
+. X O X O X X X
+. O O O X O . X
+. . . X O . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 6 4
+othello> p
+. . O X . O . .
+. . . O . O X X
+. X O X O O X X
+. O O O X O . X
+. . . X X O . .
+. . . X . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 1 5
+othello> p
+. . O X X O . O
+. . . O . X O X
+. X O X O O X X
+. O O O X O . X
+. . . X X O . .
+. . . X . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 1 7
+othello> p
+. . O X X X X O
+. . . O . X X O
+. X O X O O X O
+. O O O X O . O
+. . . X X O . O
+. . . X . . . .
+. . . . . . . .
+. . . . . . . .
+othello> m 5 3
+othello> p
+. . O X X X X O
+. . . O . X X O
+. X O O X O X O
+. O O O X O . O
+. . X O X O . O
+. . . O . . . .
+. . . O . . . .
+. . . . . . . .
+othello> m 8 4
+othello> p
+. . O X X X X O
+. . . X . X X O
+. X O X X O X O
+. O O X O O . O
+. . O O X O . O
+. . O X . . . .
+. . . X . . . .
+. . . X . . . .
+othello> m 7 2
+othello> p
+. . O X X X X O
+. . . X . X O O
+. X O X X O X O
+. O O X O O . O
+. . O O X O . O
+. . O X . . . .
+. O . X . . . .
+O . . X . . . .
+othello> m 6 6
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X O X X O
+. O O X O O . O
+. . O O O O O O
+. . O X . X . .
+. O . X . . . .
+O . . X . . . .
+othello> m 6 5
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X O X X O
+. O X X O O . O
+. . O X O O O O
+. . O O O O . .
+. O . X O . . .
+O . . X . . . .
+othello> m 7 6
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X O X X O
+. O X X O X . O
+. . O X O X O O
+. . O O O X . .
+. O . O O X . .
+O . . X O . . .
+othello> m 7 3
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X O X X O
+. O O X O X . O
+. . O X X X O O
+. . O X O X . .
+. O O O X X . .
+O . O O O . . .
+othello> m 8 2
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X O X X O
+. O O O O X . O
+. . O X O X O O
+. . O X O O . .
+. O X O O O O .
+O X O O O . . .
+othello> m 6 2
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X X X X O
+. O O X O X . O
+. . X X O X O O
+O O O O O O . .
+. O X O O O O .
+O X O O O . . .
+othello> m 7 1
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X X X O O
+. O O X O O O O
+. . X X O O O O
+O X O O O O . .
+X X X O O O O .
+O X O O O . . .
+othello> m 7 8
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X X X O O
+. O O X O O O O
+. . X X O O O O
+O X O O O O . .
+X X X X X X O X
+O X O O O . . O
+othello> m 5 2
+othello> p
+. . O X X X X O
+. . . O . X O O
+. X O X X X O O
+O O O O O O O O
+. O X X O O O O
+O X O O O O . .
+X X X O X X O X
+O X O O O . . O
+othello> m 2 3
+othello> p
+. . O X X X X O
+. . X O . X O O
+O O O O O O O O
+O O X O O O O O
+. O X X O O O O
+O X O O O O . .
+X X X O X X O X
+O X O O O . . O
+othello> m 1 5
+Error! Invalid move at (1, 5)!
+othello> m 2 5
+othello> p
+. . O X X X X O
+. O O O O O O O
+O O O X X O O O
+O O X O X O O O
+. O X X X O O O
+O X O O X O . .
+X X X O X X O X
+O X O O O . . O
+othello> m 1 2
+othello> p
+O O O O O O O O
+. O X O O O O O
+O X O X X O O O
+O X X O X O O O
+. X X X X O O O
+O X O O X O . .
+X X X O X X O X
+O X O O O . . O
+othello> m 1 5
+Error! Invalid move at (1, 5)!
+othello> m 5 1
+othello> p
+O O O O O O O O
+. O X O O O O O
+O X O X X O O O
+O X X O X O O O
+X X X X X O O O
+X X O O X O . .
+X X X O O O O X
+O X O O O O . O
+othello> m 2 1
+othello> p
+O O O O O O O O
+X X X O O O O O
+X X O X X O O O
+X X X O X O O O
+X X X X X O O O
+X X O O X O . O
+X X X O O O O O
+O X O O O O . O
+othello> m 6 7
+The bot has to miss a turn
+othello> p
+O O O O O O O O
+X X X O O O O O
+X X O X X O O O
+X X X O X O O O
+X X X X X X O O
+X X O O X X X O
+X X X O O O O O
+O X O O O O . O
+othello> m 8 7
+You have won!
+othello> q
+
+Process finished with exit code 0

@@ -19,12 +19,17 @@ public class Reversi implements Board {
     /**
      * Entspricht dem Spielfeld.
      */
-    private Player[][] game;
+    private Player[][] gameBoard;
 
     /**
      * Entspricht der momentanen Schwierigkeitsstufe der Maschine.
      */
     private int level;
+
+    /**
+     * Entspricht dem standard eingestellten Level.
+     */
+    private final static int DEFAULT_LEVEL = 3;
 
     /**
      * Entspricht dem Spieler, der das Spiel eröffnet hat.
@@ -44,6 +49,16 @@ public class Reversi implements Board {
     private boolean gameOver;
 
     /**
+     * Entspricht der Anzahl an Steinen des menschlichen Spielers auf dem Feld.
+     */
+    private int numberOfHumanTiles = 2;
+
+    /**
+     * Entspricht der Anzahl an Steinen der Maschine auf dem Feld.
+     */
+    private int numberOfMachineTiles = 2;
+
+    /**
      * Erzeugt ein neues Spiel mit den Spieleinstellungen des alten Spiels,
      * falls kein altes Spiel vorhanden ist, werden die standard
      * Spieleinstellungen ausgewählt.
@@ -56,12 +71,12 @@ public class Reversi implements Board {
     public Reversi(Reversi reversi) {
         if (reversi == null) {
             firstPlayer = Player.HUMAN;
-            level = 3;
+            level = DEFAULT_LEVEL;
         } else {
             firstPlayer = reversi.getFirstPlayer();
             level = reversi.level;
         }
-        game = new Player[Board.SIZE][Board.SIZE];
+        gameBoard = new Player[Board.SIZE][Board.SIZE];
         nextPlayer = firstPlayer;
         setInitialPosition();
     }
@@ -82,14 +97,14 @@ public class Reversi implements Board {
     public Reversi(Player firstPlayer, Reversi reversi) {
         if ((firstPlayer == Player.MACHINE || firstPlayer == Player.HUMAN)
                 && reversi != null) {
-            game = new Player[Board.SIZE][Board.SIZE];
+            gameBoard = new Player[Board.SIZE][Board.SIZE];
             this.firstPlayer = firstPlayer;
             nextPlayer = firstPlayer;
             level = reversi.level;
             setInitialPosition();
         } else {
-            throw new IllegalArgumentException("firstPlayer or " +
-                    "old game is illegal!");
+            throw new IllegalArgumentException("firstPlayer or "
+                    + "old game is illegal!");
         }
     }
 
@@ -152,8 +167,8 @@ public class Reversi implements Board {
                 throw new IllegalMoveException("Game is already over!");
             }
         } else {
-            throw new IllegalArgumentException("Row or col is negative" +
-                    " or too big!");
+            throw new IllegalArgumentException("Row or col is negative"
+                    + " or too big!");
         }
     }
 
@@ -235,8 +250,6 @@ public class Reversi implements Board {
     @Override
     public Player getWinner() {
         if (gameOver()) {
-            int numberOfMachineTiles = getNumberOfMachineTiles();
-            int numberOfHumanTiles = getNumberOfHumanTiles();
             if (numberOfHumanTiles > numberOfMachineTiles) {
                 return Player.HUMAN;
             } else if (numberOfHumanTiles < numberOfMachineTiles) {
@@ -253,22 +266,20 @@ public class Reversi implements Board {
      * Gibt die Anzahl der Steine des Menschen auf dem Spielfeld zurück.
      *
      * @return      Entspricht der Anzahl der Steine.
-     * @see         #getNumberOfTiles(Player)
      */
     @Override
     public int getNumberOfHumanTiles() {
-        return getNumberOfTiles(Player.HUMAN);
+        return numberOfHumanTiles;
     }
 
     /**
      * Gibt die Anzahl der Steine der Maschine auf dem Spielfeld zurück.
      *
      * @return      Entspricht der Anzahl der Steine.
-     * @see         #getNumberOfTiles(Player)
      */
     @Override
     public int getNumberOfMachineTiles() {
-        return getNumberOfTiles(Player.MACHINE);
+        return numberOfMachineTiles;
     }
 
     /**
@@ -287,10 +298,10 @@ public class Reversi implements Board {
     @Override
     public Player getSlot(int row, int col) {
         if (row > 0 && col > 0 && row <= Board.SIZE && col <= Board.SIZE) {
-            return game[row - 1][col - 1];
+            return gameBoard[row - 1][col - 1];
         } else {
-            throw new IllegalArgumentException("Row or col is negative" +
-                " or too big!");
+            throw new IllegalArgumentException("Row or col is negative"
+                + " or too big!");
         }
     }
 
@@ -309,11 +320,11 @@ public class Reversi implements Board {
         } catch (CloneNotSupportedException e) {
             throw new IllegalStateException("Reversi has to be cloneable!");
         }
-        Player[][] gameCopy = game.clone();
+        Player[][] gameCopy = gameBoard.clone();
         for (int i = 0; i < gameCopy.length; i++) {
             gameCopy[i] = gameCopy[i].clone();
         }
-        copy.game = gameCopy;
+        copy.gameBoard = gameCopy;
         return copy;
     }
 
@@ -326,19 +337,25 @@ public class Reversi implements Board {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 1; i <= game.length; i++) {
-            for (int u = 1; u <= game[i - 1].length; u++) {
-                Player player = getSlot(i, u);
+        for (int i = 1; i <= gameBoard.length; i++) {
+            for (int u = 1; u <= gameBoard[i - 1].length; u++) {
+                Player playerOfSlot = getSlot(i, u);
 
-                if (player == null) {
+                if (playerOfSlot == null) {
                     stringBuilder.append('.');
-                } else if (player == Player.HUMAN) {
+                } else if (playerOfSlot == Player.HUMAN) {
                     stringBuilder.append('X');
                 } else {
                     stringBuilder.append('O');
                 }
+
+                if (u != gameBoard[i - 1].length) {
+                    stringBuilder.append(' ');
+                }
             }
-            stringBuilder.append("\n");
+            if (i != gameBoard.length) {
+                stringBuilder.append("\n");
+            }
         }
         return stringBuilder.toString();
     }
@@ -387,8 +404,8 @@ public class Reversi implements Board {
         assert player != null : "Player cannot be undefined!";
 
         int counter = 0;
-        for (int i = 1; i <= game.length; i++) {
-            for (int u = 1; u <= game[i - 1].length; u++) {
+        for (int i = 1; i <= gameBoard.length; i++) {
+            for (int u = 1; u <= gameBoard[i - 1].length; u++) {
                 if (checkLegalityOfMove(i, u, player).size() > 0) {
                     counter++;
                 }
@@ -479,7 +496,13 @@ public class Reversi implements Board {
         assert next() != null : "Next player cannot be undefined!";
 
         Reversi copy = clone();
-        copy.game[row - 1][col - 1] = next();
+        copy.gameBoard[row - 1][col - 1] = next();
+        if (next() == Player.HUMAN) {
+            copy.numberOfHumanTiles++;
+        } else {
+            copy.numberOfMachineTiles++;
+        }
+
         for (Direction direction: directions) {
             boolean endLoop = false;
             int rowToInverse = row + direction.getY();
@@ -490,7 +513,14 @@ public class Reversi implements Board {
                 Player playerOfSlot = getSlot(rowToInverse, colToInverse);
 
                 if (playerOfSlot == next().inverse()) {
-                    copy.game[rowToInverse - 1][colToInverse - 1] = next();
+                    copy.gameBoard[rowToInverse - 1][colToInverse - 1] = next();
+                    if (next() == Player.HUMAN) {
+                        copy.numberOfHumanTiles++;
+                        copy.numberOfMachineTiles--;
+                    } else {
+                        copy.numberOfMachineTiles++;
+                        copy.numberOfHumanTiles--;
+                    }
                 } else {
                     endLoop = true;
                 }
@@ -523,26 +553,6 @@ public class Reversi implements Board {
     }
 
     /**
-     * Gibt die Anzahl der Steine des {@code player} auf dem Spielfeld zurück.
-     *
-     * @param player        Entspricht einen der Spieler oder kann auch
-     *                      {@code null} sein, was für leere Felder steht.
-     * @return              Gibt die Anzahl der Steine auf dem Spielfeld zurück
-     *                      oder auf wie vielen Feldern keine Steine liegen.
-     */
-    private int getNumberOfTiles(Player player) {
-        int counter = 0;
-        for (int i = 1; i <= game.length; i++) {
-            for (int u = 1; u <= game[i - 1].length; u++) {
-                if (getSlot(i, u) == player) {
-                    counter++;
-                }
-            }
-        }
-        return counter;
-    }
-
-    /**
      * Setzt die Anfangsposition des Spielfelds in Abhängigkeit der Größe des
      * Spielfelds.
      */
@@ -550,9 +560,9 @@ public class Reversi implements Board {
         assert firstPlayer != null : "First player cannot be undefined!";
 
         int median = Board.SIZE / 2 - 1;
-        game[median][median] = firstPlayer.inverse();
-        game[median + 1][median] = firstPlayer;
-        game[median][median + 1] = firstPlayer;
-        game[median + 1][median + 1] = firstPlayer.inverse();
+        gameBoard[median][median] = firstPlayer.inverse();
+        gameBoard[median + 1][median] = firstPlayer;
+        gameBoard[median][median + 1] = firstPlayer;
+        gameBoard[median + 1][median + 1] = firstPlayer.inverse();
     }
 }

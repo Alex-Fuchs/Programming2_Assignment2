@@ -25,7 +25,7 @@ class Score {
     /**
      * Entspricht der Bewertung der einzelnen Felder des Spielbretts.
      */
-    private static final int[][] fieldScores = getFieldScores();
+    private static final int[][] FIELD_SCORES = getFieldScores();
 
     /**
      * Kreiert ein Bewertungsobjekt für ein {@code Reversi} Objekt mit dem
@@ -48,20 +48,17 @@ class Score {
      *
      * @return          Gibt den Score des Spielbretts zurück.
      * @see             #calculateFieldScore()
-     * @see             #calculateMobilityScore(int)
-     * @see             #calculatePotencialScore(int)
+     * @see             #calculateMobilityScore()
+     * @see             #calculatePotencialScore()
      */
     double calculateScore() {
         assert reversi != null : "Reversi to assess cannot be undefined";
         assert playerToAssess != null : "Player to asses cannot be undefined";
 
         double score = 0;
-        int numberOfTakenFields = reversi.getNumberOfHumanTiles()
-                                + reversi.getNumberOfMachineTiles();
-
         score += calculateFieldScore();
-        score += calculateMobilityScore(numberOfTakenFields);
-        score += calculatePotencialScore(numberOfTakenFields);
+        score += calculateMobilityScore();
+        score += calculatePotencialScore();
         return score;
     }
 
@@ -84,9 +81,9 @@ class Score {
         for (int i = 1; i <= Board.SIZE; i++) {
             for (int u = 1; u <= Board.SIZE; u++) {
                 if (reversi.getSlot(i, u) == playerToAssess) {
-                    playerScore += fieldScores[i - 1][u - 1];
+                    playerScore += FIELD_SCORES[i - 1][u - 1];
                 } else if (reversi.getSlot(i, u) == playerToAssess.inverse()) {
-                    enemyScore += fieldScores[i - 1][u - 1];
+                    enemyScore += FIELD_SCORES[i - 1][u - 1];
                 }
             }
         }
@@ -99,16 +96,16 @@ class Score {
      * einbezogen werden. Der Score wird mit einer bestimmten Formel berechnet
      * und wird im Laufe des Spiels immer unwichtiger.
      *
-     * @param numberOfTakenFields   Entspricht der Anzahl an besetzten Feldern,
-     *                              die aufgrund Laufzeit ausgelagert wurde.
      * @return                      Gibt den Score der möglichen Züge zurück.
      * @see                         Reversi#numberOfLegalMoves(Player)
      */
-    private double calculateMobilityScore(int numberOfTakenFields) {
+    private double calculateMobilityScore() {
         assert reversi != null : "Reversi to assess cannot be undefined";
         assert playerToAssess != null : "Player to asses cannot be undefined";
 
         int numberOfFields = Board.SIZE * Board.SIZE;
+        int numberOfTakenFields = reversi.getNumberOfHumanTiles()
+                                + reversi.getNumberOfMachineTiles();
         int playerScore = reversi.numberOfLegalMoves(playerToAssess);
         int enemyScore = reversi.numberOfLegalMoves(playerToAssess.inverse());
         return (numberOfFields / (double) numberOfTakenFields)
@@ -123,17 +120,17 @@ class Score {
      * bestimmten Formel berechnet und wird im Laufe des Spiels immer
      * unwichtiger.
      *
-     * @param numberOfTakenFields   Entspricht der Anzahl an besetzten Feldern,
-     *                              die aufgrund Laufzeit ausgelagert wurde.
      * @return                      Gibt den Score der zukünftig möglichen
      *                              Züge zurück.
      * @see                         #countWrappingFields(int, int)
      */
-    private double calculatePotencialScore(int numberOfTakenFields) {
+    private double calculatePotencialScore() {
         assert reversi != null : "Reversi to assess cannot be undefined";
         assert playerToAssess != null : "Player to asses cannot be undefined";
 
         int numberOfFields = Board.SIZE * Board.SIZE;
+        int numberOfTakenFields = reversi.getNumberOfHumanTiles()
+                                + reversi.getNumberOfMachineTiles();
         int playerScore = 0;
         int enemyScore = 0;
         for (int i = 1; i <= Board.SIZE; i++) {
@@ -185,7 +182,9 @@ class Score {
      *              Felderbewertung benötigt wird.
      */
     private static int[][] getFieldScores() {
-        int[][] result = new int[8][8];
+        assert Board.SIZE == 8 : "Calculating is only for 8x8 possible";
+
+        int[][] result = new int[Board.SIZE][Board.SIZE];
 
         result[0][0] = 9999;
         result[0][1] = 5;
