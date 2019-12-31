@@ -372,6 +372,7 @@ public class Reversi implements Board {
      *                                      Klon zurückgegeben, auf dem der
      *                                      Zug ausgeführt wurde, andernfalls
      *                                      wird {@code null} zurückgegeben.
+     * @see                                 #next()
      * @see                                 #checkLegalityOfMove(int, int,
      *                                      Player)
      * @see                                 #executeMove(int, int, List)
@@ -493,11 +494,11 @@ public class Reversi implements Board {
         assert row > 0 && row <= Board.SIZE : "Row is not positive or to big!";
         assert col > 0 && col <= Board.SIZE : "Col is not positive or to big!";
         assert directions.size() > 0 : "The move is not legal!";
-        assert next() != null : "Next player cannot be undefined!";
+        assert nextPlayer != null : "Next player cannot be undefined!";
 
         Reversi copy = clone();
-        copy.gameBoard[row - 1][col - 1] = next();
-        if (next() == Player.HUMAN) {
+        copy.gameBoard[row - 1][col - 1] = nextPlayer;
+        if (nextPlayer == Player.HUMAN) {
             copy.numberOfHumanTiles++;
         } else {
             copy.numberOfMachineTiles++;
@@ -512,9 +513,10 @@ public class Reversi implements Board {
                     && colToInverse <= Board.SIZE && colToInverse > 0) {
                 Player playerOfSlot = getSlot(rowToInverse, colToInverse);
 
-                if (playerOfSlot == next().inverse()) {
-                    copy.gameBoard[rowToInverse - 1][colToInverse - 1] = next();
-                    if (next() == Player.HUMAN) {
+                if (playerOfSlot == nextPlayer.inverse()) {
+                    copy.gameBoard[rowToInverse - 1][colToInverse - 1]
+                            = nextPlayer;
+                    if (nextPlayer == Player.HUMAN) {
                         copy.numberOfHumanTiles++;
                         copy.numberOfMachineTiles--;
                     } else {
@@ -540,7 +542,7 @@ public class Reversi implements Board {
      * @see                         #numberOfLegalMoves(Player)
      */
     private void setNextPlayer() {
-        assert next() != null : "Old player cannot be undefined!";
+        assert nextPlayer != null : "Old player cannot be undefined!";
 
         nextPlayer = nextPlayer.inverse();
         if (numberOfLegalMoves(nextPlayer) == 0) {

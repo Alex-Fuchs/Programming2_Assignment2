@@ -147,8 +147,8 @@ class Tree {
 
         double scoreOfChildren = children.get(0).calculateScore(playerToAssess);
         for (int i = 1; i < children.size(); i++) {
-            Tree child = children.get(i);
-            double scoreOfChild = child.calculateScore(playerToAssess);
+            double scoreOfChild
+                    = children.get(i).calculateScore(playerToAssess);
 
             if (root.next() == playerToAssess) {
                 if (scoreOfChildren < scoreOfChild) {

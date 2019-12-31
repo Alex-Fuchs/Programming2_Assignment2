@@ -53,10 +53,9 @@ final class ShellToBoard {
             if (board.next() == Player.HUMAN) {
                 Integer[] parameters = checkParameters(tokens);
                 if (parameters != null) {
-                    int row = parameters[0];
-                    int col = parameters[1];
-                    if (row <= Board.SIZE && col <= Board.SIZE) {
-                        Board move = board.move(row, col);
+                    if (parameters[0] <= Board.SIZE
+                            && parameters[1] <= Board.SIZE) {
+                        Board move = board.move(parameters[0], parameters[1]);
 
                         if (move != null) {
                             board = move;
@@ -66,8 +65,8 @@ final class ShellToBoard {
                                 checkMissTurn(Player.HUMAN);
                             }
                         } else {
-                            printError("Invalid move at (" + row + ", "
-                                    + col + ")!");
+                            printError("Invalid move at (" + parameters[0]
+                                    + ", " + parameters[1] + ")!");
                         }
                     } else {
                         printError("At least one parameter is too big!");

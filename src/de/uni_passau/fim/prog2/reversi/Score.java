@@ -80,9 +80,11 @@ class Score {
         int enemyScore = 0;
         for (int i = 1; i <= Board.SIZE; i++) {
             for (int u = 1; u <= Board.SIZE; u++) {
-                if (reversi.getSlot(i, u) == playerToAssess) {
+                Player playerOfSlot = reversi.getSlot(i, u);
+
+                if (playerOfSlot == playerToAssess) {
                     playerScore += FIELD_SCORES[i - 1][u - 1];
-                } else if (reversi.getSlot(i, u) == playerToAssess.inverse()) {
+                } else if (playerOfSlot == playerToAssess.inverse()) {
                     enemyScore += FIELD_SCORES[i - 1][u - 1];
                 }
             }
@@ -135,9 +137,11 @@ class Score {
         int enemyScore = 0;
         for (int i = 1; i <= Board.SIZE; i++) {
             for (int u = 1; u <= Board.SIZE; u++) {
-                if (reversi.getSlot(i, u) == playerToAssess) {
+                Player playerOfSlot = reversi.getSlot(i, u);
+
+                if (playerOfSlot == playerToAssess) {
                     enemyScore += countWrappingFields(i, u);
-                } else if (reversi.getSlot(i, u) == playerToAssess.inverse()) {
+                } else if (playerOfSlot == playerToAssess.inverse()) {
                     playerScore += countWrappingFields(i, u);
                 }
             }
