@@ -61,6 +61,7 @@ public class Reversi implements Board {
      * @param  firstPlayer                  Entspricht dem Eröffner des Spiels.
      * @throws IllegalArgumentException     Wird geworfen, falls der Eröffner
      *                                      {@code null} ist.
+     * @see                                 #setInitialPosition()
      */
     public Reversi(Player firstPlayer) {
         if (firstPlayer != null) {

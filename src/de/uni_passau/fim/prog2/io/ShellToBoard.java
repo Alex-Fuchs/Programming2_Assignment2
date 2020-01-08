@@ -27,8 +27,8 @@ final class ShellToBoard {
      * Setzt das {@code Board} Objekt vollständig zurück, wobei die
      * Spieleinstellungen des alten Spiels erhalten bleiben.
      *
-     * @see     Reversi
      * @see     Board#getFirstPlayer()
+     * @see     Reversi
      */
     static void createNewBoard() {
         board = new Reversi(board.getFirstPlayer());
