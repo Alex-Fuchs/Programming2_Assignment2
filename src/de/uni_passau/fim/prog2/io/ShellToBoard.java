@@ -19,7 +19,7 @@ final class ShellToBoard {
      * Stellt das Objekt des Spiels dar und setzt das Level auf 3 und den
      * Eröffner auf den Menschen.
      */
-    private static Board board = new Reversi(null);
+    private static Board board = new Reversi(Player.HUMAN);
 
     private ShellToBoard() { }
 
@@ -28,9 +28,10 @@ final class ShellToBoard {
      * Spieleinstellungen des alten Spiels erhalten bleiben.
      *
      * @see     Reversi
+     * @see     Board#getFirstPlayer()
      */
     static void createNewBoard() {
-        board = new Reversi((Reversi) board);
+        board = new Reversi(board.getFirstPlayer());
     }
 
     /**
@@ -130,9 +131,9 @@ final class ShellToBoard {
      */
     static void switchPlayerOrder() {
         if (board.getFirstPlayer() == Player.HUMAN) {
-            board = new Reversi(Player.MACHINE, (Reversi) board);
+            board = new Reversi(Player.MACHINE);
         } else {
-            board = new Reversi(Player.HUMAN, (Reversi) board);
+            board = new Reversi(Player.HUMAN);
         }
     }
 

@@ -24,12 +24,7 @@ public class Reversi implements Board {
     /**
      * Entspricht der momentanen Schwierigkeitsstufe der Maschine.
      */
-    private int level;
-
-    /**
-     * Entspricht dem standard eingestellten Level.
-     */
-    private final static int DEFAULT_LEVEL = 3;
+    private static int level = 3;
 
     /**
      * Entspricht dem Spieler, der das Spiel eröffnet hat.
@@ -59,52 +54,22 @@ public class Reversi implements Board {
     private int numberOfMachineTiles = 2;
 
     /**
-     * Erzeugt ein neues Spiel mit den Spieleinstellungen des alten Spiels,
-     * falls kein altes Spiel vorhanden ist, werden die standard
-     * Spieleinstellungen ausgewählt.
+     * Erstellt ein Spiel, wobei der Eröffner gesetzt werden kann und die
+     * Schwierigkeitsstufe des alten Spiels erhalten bleibt bzw bei dem ersten
+     * Spiel gleich {@code 3} ist.
      *
-     * @param reversi       Entspricht dem alten Spiel. Falls dies {@code null}
-     *                      ist, werden die standard Spieleinstellungen
-     *                      ausgewählt.
-     * @see                 #setInitialPosition()
+     * @param  firstPlayer                  Entspricht dem Eröffner des Spiels.
+     * @throws IllegalArgumentException     Wird geworfen, falls der Eröffner
+     *                                      {@code null} ist.
      */
-    public Reversi(Reversi reversi) {
-        if (reversi == null) {
-            firstPlayer = Player.HUMAN;
-            level = DEFAULT_LEVEL;
-        } else {
-            firstPlayer = reversi.getFirstPlayer();
-            level = reversi.level;
-        }
-        gameBoard = new Player[Board.SIZE][Board.SIZE];
-        nextPlayer = firstPlayer;
-        setInitialPosition();
-    }
-
-    /**
-     * Erzeugt ein neues Spiel, wobei {@code firstPlayer} individuell gesetzt
-     * werden kann und die sonstigen Spieleinstellungen, das Level, des alten
-     * Spiels übernommen werden.
-     *
-     * @param firstPlayer                   Entspricht dem Eröffner des Spiels.
-     * @param reversi                       Entspricht dem alten Spiel, von
-     *                                      dem das Level übernommen wird.
-     * @throws IllegalArgumentException     Wird geworfen, falls
-     *                                      {@code firstPlayer} oder
-     *                                      {@code reversi} {@code null} ist.
-     * @see                                 #setInitialPosition()
-     */
-    public Reversi(Player firstPlayer, Reversi reversi) {
-        if ((firstPlayer == Player.MACHINE || firstPlayer == Player.HUMAN)
-                && reversi != null) {
+    public Reversi(Player firstPlayer) {
+        if (firstPlayer != null) {
             gameBoard = new Player[Board.SIZE][Board.SIZE];
             this.firstPlayer = firstPlayer;
             nextPlayer = firstPlayer;
-            level = reversi.level;
             setInitialPosition();
         } else {
-            throw new IllegalArgumentException("firstPlayer or "
-                    + "old game is illegal!");
+            throw new IllegalArgumentException("FirstPlayer is undefined!");
         }
     }
 
@@ -191,7 +156,7 @@ public class Reversi implements Board {
     public Reversi machineMove() {
         if (!gameOver()) {
             if (next() == Player.MACHINE) {
-                Tree tree = new Tree(this, level);
+                Tree tree = new Tree(this, Reversi.level);
                 return tree.calculateBestMove();
             } else {
                 throw new IllegalMoveException("Human Turn!");
@@ -215,7 +180,7 @@ public class Reversi implements Board {
     @Override
     public void setLevel(int level) {
         if (level > 0) {
-            this.level = level;
+            Reversi.level = level;
         } else {
             throw new IllegalArgumentException("Level is negative or 0!");
         }
